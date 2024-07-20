@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'package:liku/Components/TopBottomComp.dart';
+import 'package:liku/Components/SelectComp.dart';
+
+import 'Components/TopBottomComp.dart';
 import 'Components/Comp.dart';
 import 'Components/GridComp.dart';
 
@@ -62,28 +66,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            OrangeButton(text: "text"),
-            ShowInfo(),
-            FinalResult(title: "총 수량", data: "10"),
-            TicketResults(title: "출발지", content: "동서울", width: 100),
-            Container(
-                alignment: Alignment.center,
-                width: 400,
-                height: 72,
-                child: TextWordView()),
-            SizedBox(height: 5),
-            Container(
-                alignment: Alignment.center,
-                width: 450,
-                height: 82,
-                child: LocationContainer())
-          ],
+      appBar: Headercomp(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              OrangeButton(text: "text"),
+              ShowInfo(),
+              FinalResult(title: "총 수량", data: "10"),
+              TicketResults(title: "출발지", content: "동서울", width: 100),
+              Container(
+                  alignment: Alignment.center,
+                  width: 400,
+                  height: 72,
+                  child: TextWordView()),
+              SizedBox(height: 5),
+              Container(
+                  alignment: Alignment.center,
+                  width: 450,
+                  height: 82,
+                  child: LocationContainer()),
+              SelectComp(),
+              ButtonComp()
+            ],
+          ),
         ),
       ),
+      bottomNavigationBar: BottomComp(),
     );
   }
 }
