@@ -62,25 +62,27 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          OrangeButton(text: "text"),
-          ShowInfo(),
-          FinalResult(title: "총 수량", data: "10"),
-          TicketResults(title: "출발지", content: "동서울", width: 100),
-          Container(
-              alignment: Alignment.center,
-              width: 400,
-              height: 72,
-              child: TextWordView()),
-          SizedBox(height: 5),
-          Container(
-              alignment: Alignment.center,
-              width: 450,
-              height: 82,
-              child: LocationContainer())
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            OrangeButton(text: "text"),
+            ShowInfo(),
+            FinalResult(title: "총 수량", data: "10"),
+            TicketResults(title: "출발지", content: "동서울", width: 100),
+            Container(
+                alignment: Alignment.center,
+                width: 400,
+                height: 72,
+                child: TextWordView()),
+            SizedBox(height: 5),
+            Container(
+                alignment: Alignment.center,
+                width: 450,
+                height: 82,
+                child: LocationContainer())
+          ],
+        ),
       ),
     );
   }
