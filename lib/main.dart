@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
-
-import 'Components/TopBottomComp.dart';
+import 'package:liku/SelectTime/SelectTime.dart';
 import 'Components/Comp.dart';
 import 'Components/GridComp.dart';
+import 'Home/Home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SelectTime(),
     );
   }
 }
@@ -66,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Headercomp(),
+      appBar: const Headercomp(text: '동서울 터미널 무인발매기 입니다.'),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -87,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 450,
                   height: 82,
                   child: LocationContainer()),
-              SelectComp(),
               ButtonComp()
             ],
           ),
