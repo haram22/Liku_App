@@ -9,7 +9,7 @@ class OrangeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 120,
+      width: 140,
       height: 50,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
@@ -23,7 +23,8 @@ class OrangeButton extends StatelessWidget {
         },
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -37,7 +38,6 @@ class ShowInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: primaryPurple,
-      height: 290,
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Column(
@@ -71,7 +71,7 @@ class InfoContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: MediaQuery.of(context).size.height * 0.17,
       color: Colors.white,
       child: Column(
         children: [
@@ -80,17 +80,20 @@ class InfoContainer extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               color: color,
-              width: 100,
-              height: 30,
+              width: double.infinity,
+              height: 50,
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ),
           SizedBox(height: 7),
-          Text(content)
+          Text(
+            content,
+            style: TextStyle(fontSize: 20),
+          )
         ],
       ),
     );

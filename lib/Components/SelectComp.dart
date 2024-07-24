@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:liku/Theme/Colors.dart';
 
 class SelectComp extends StatefulWidget {
-  const SelectComp({super.key});
+  final Function(int adult, int mid, int child) onCountChanged;
+  const SelectComp({super.key, required this.onCountChanged});
 
   @override
   State<SelectComp> createState() => _SelectCompState();
@@ -47,6 +48,7 @@ class _SelectCompState extends State<SelectComp> {
                           if (adult != 0) {
                             setState(() {
                               adult--;
+                              widget.onCountChanged(-1, 0, 0);
                             });
                           }
                         },
@@ -65,6 +67,7 @@ class _SelectCompState extends State<SelectComp> {
                         onPressed: () {
                           setState(() {
                             adult++;
+                            widget.onCountChanged(1, 0, 0);
                           });
                         },
                         child: Icon(Icons.add)),
@@ -103,6 +106,7 @@ class _SelectCompState extends State<SelectComp> {
                         if (mid != 0) {
                           setState(() {
                             mid--;
+                            widget.onCountChanged(0, -1, 0);
                           });
                         }
                       },
@@ -121,6 +125,7 @@ class _SelectCompState extends State<SelectComp> {
                       onPressed: () {
                         setState(() {
                           mid++;
+                          widget.onCountChanged(0, 1, 0);
                         });
                       },
                       child: Icon(Icons.add)),
@@ -158,6 +163,7 @@ class _SelectCompState extends State<SelectComp> {
                         if (child != 0) {
                           setState(() {
                             child--;
+                            widget.onCountChanged(0, 0, -1);
                           });
                         }
                       },
@@ -176,6 +182,7 @@ class _SelectCompState extends State<SelectComp> {
                       onPressed: () {
                         setState(() {
                           child++;
+                          widget.onCountChanged(0, 0, 1);
                         });
                       },
                       child: Icon(Icons.add)),
@@ -232,5 +239,29 @@ class ButtonComp extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class ArrowPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 2.0
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+    path.moveTo(size.width - 20, size.height / 2);
+    path.lineTo(size.width + 20, size.height / 2);
+    path.moveTo(size.width + 20, size.height / 2);
+    path.lineTo(size.width + 12, size.height / 2 - 5);
+    path.moveTo(size.width + 20, size.height / 2);
+    path.lineTo(size.width + 12, size.height / 2 + 5);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }

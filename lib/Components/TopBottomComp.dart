@@ -3,7 +3,8 @@ import 'package:liku/Theme/Colors.dart';
 import 'package:marquee/marquee.dart';
 
 class Headercomp extends StatelessWidget implements PreferredSizeWidget {
-  const Headercomp({super.key});
+  final String text;
+  const Headercomp({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,8 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    maximumSize:
+                        Size(MediaQuery.of(context).size.width * 0.15, 80),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(3)),
                     backgroundColor: primaryRed,
@@ -35,13 +38,13 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                             Icons.home,
                             color: Colors.amber[200],
                           ),
-                          Text(
+                          const Text(
                             '처음화면으로',
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         '자동종료시간: 24',
                         style: TextStyle(fontSize: 15),
                       ),
@@ -57,11 +60,11 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                 borderRadius: BorderRadius.circular(5),
                 color: primaryBlack,
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '동서울 터미널 무인발매기 입니다.',
+                    text,
                     //textAlign: TextAlign.center,
                     style: TextStyle(
                       color: primaryYellow,
@@ -72,29 +75,160 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             // 오른쪽 구역
-            const Expanded(
-              child: DefaultTextStyle(
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
+            const Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+              child: Expanded(
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                  child: Column(
+                    children: [
+                      Text(
+                        '2022-11-25',
+                      ),
+                      Text(
+                        '10:33:02',
+                      ),
+                      Text(
+                        '승차권잔여수량',
+                        style: TextStyle(color: primaryRed),
+                      ),
+                      Text(
+                        '831',
+                        style: TextStyle(color: primaryRed),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(100.0);
+}
+
+class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
+  const HomeHeaderComp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      //backgroundColor: Colors.grey,
+      flexibleSpace: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // 왼쪽 구역
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.13,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: primaryRed,
+                ),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '2022-11-25',
+                    Row(
+                      children: [
+                        const Text('Language',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 20)),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(0),
+                            backgroundColor: primaryYellow,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            minimumSize: Size(55, 30),
+                          ),
+                          onPressed: () {
+                            //
+                          },
+                          child: const Text('Select',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        )
+                      ],
                     ),
-                    Text(
-                      '10:33:02',
+                    Container(
+                      width: 150,
+                      height: 1, // 선의 높이
+                      color: Colors.white, // 선의 색상
                     ),
-                    Text(
-                      '승차권잔여수량',
-                      style: TextStyle(color: primaryRed),
-                    ),
-                    Text(
-                      '831',
-                      style: TextStyle(color: primaryRed),
+                    const Text(
+                      '한국어',
+                      style: TextStyle(color: Colors.white, fontSize: 30),
                     ),
                   ],
+                ),
+              ),
+            ),
+
+            // 가운데 구역
+            Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 100,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: primaryBlack,
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '동서울 터미널 무인발매기 입니다.',
+                    style: TextStyle(
+                      color: primaryYellow,
+                      fontSize: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // 오른쪽 구역
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
+              child: Expanded(
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                  child: Column(
+                    children: [
+                      Text(
+                        '2022-11-25',
+                      ),
+                      Text(
+                        '10:33:02',
+                      ),
+                      Text(
+                        '승차권잔여수량',
+                        style: TextStyle(color: primaryRed),
+                      ),
+                      Text(
+                        '831',
+                        style: TextStyle(color: primaryRed),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -118,9 +252,7 @@ class BottomComp extends StatelessWidget {
       child: Container(
         height: 30, // 컨테이너 높이 설정
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.black, // 여기서 primaryBlack 대신 직접 색상을 지정했습니다.
-        ),
+            borderRadius: BorderRadius.circular(10), color: primaryBlack),
         child: Marquee(
           text: '동서울 터미널 무인발매기 입니다.',
           style: TextStyle(color: Colors.white, fontSize: 15),
