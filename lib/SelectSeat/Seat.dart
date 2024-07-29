@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:liku/Theme/Colors.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
   final bool alert;
-  const SeatSelectionScreen({super.key, required this.alert});
+  final int maxSelectableSeats;
+  const SeatSelectionScreen(
+      {super.key, required this.alert, required this.maxSelectableSeats});
 
   @override
   _SeatSelectionScreenState createState() => _SeatSelectionScreenState();
@@ -57,17 +61,74 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     16,
     19,
     22,
-    25,
+    25
   ];
+  int selectedSeatCount = 0;
+
+  List<int> selectedNumbers = [];
+
+  void generateRandomNumbers() {
+    final random = Random();
+
+    // 0~8과 27~44의 숫자 목록 생성
+    List<int> availableNumbers = [
+      for (int i = 0; i < 9; i++) i,
+      for (int i = 27; i < 45; i++) i
+    ];
+
+    final int numberOfElements = random.nextInt(8) + 3; // 3 to 10 elements
+    final Set<int> numberSet = {};
+
+    while (numberSet.length < numberOfElements) {
+      numberSet.add(availableNumbers[random.nextInt(availableNumbers.length)]);
+    }
+
+    setState(() {
+      selectedNumbers = numberSet.toList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    // 예약된 좌석 예시
-    reservedSeats[2] = -1;
-    reservedSeats[5] = -1;
-    reservedSeats[35] = -1;
-    reservedSeats[30] = -1;
-    reservedSeats[40] = -1;
+    generateRandomNumbers();
+    // 3 ~ 10 개의 좌석 랜덤 예약
+    for (int i = 0; i < selectedNumbers.length; i++) {
+      int remove_seat = selectedNumbers[i];
+      reservedSeats[remove_seat] = -1;
+    }
+  }
+
+  @override
+  void didUpdateWidget(SeatSelectionScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.maxSelectableSeats < selectedSeatCount) {
+      setState(() {
+        _clearAllSelections();
+      });
+    }
+  }
+
+  void _clearAllSelections() {
+    for (int i = 0; i < reservedSeats.length; i++) {
+      if (reservedSeats[i] == 1) {
+        reservedSeats[i] = 0;
+      }
+    }
+    selectedSeatCount = 0;
+  }
+
+  void _toggleSeatSelection(int index) {
+    setState(() {
+      if (reservedSeats[index] == 0 &&
+          selectedSeatCount < widget.maxSelectableSeats) {
+        reservedSeats[index] = 1;
+        selectedSeatCount++;
+      } else if (reservedSeats[index] == 1) {
+        reservedSeats[index] = 0;
+        selectedSeatCount--;
+      }
+    });
   }
 
   @override
@@ -112,15 +173,7 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
                           return Seat(
                             seatNumber: seatNo[index],
                             isReserved: reservedSeats[index],
-                            onTap: () {
-                              setState(() {
-                                if (reservedSeats[index] == 0) {
-                                  reservedSeats[index] = 1;
-                                } else if (reservedSeats[index] == 1) {
-                                  reservedSeats[index] = 0;
-                                }
-                              });
-                            },
+                            onTap: () => _toggleSeatSelection(index),
                           );
                         },
                       ),
@@ -243,7 +296,7 @@ class Seat extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: isReserved != -1 ? onTap : null,
       child: Container(
         decoration: BoxDecoration(
           color: seatColor,

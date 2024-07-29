@@ -66,6 +66,7 @@ class _SelectseatState extends State<Selectseat> {
                 Expanded(
                   child: SeatSelectionScreen(
                     alert: alert,
+                    maxSelectableSeats: adult + child + mid,
                   ),
                 ),
                 Container(
