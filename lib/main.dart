@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
+import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
 import 'Components/GridComp.dart';
 import 'Home/Home.dart';
+import 'Payment/Payment.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SelectTime(),
+      home: Checkticket(),
     );
   }
 }

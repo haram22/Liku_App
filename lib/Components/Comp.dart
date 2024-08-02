@@ -140,7 +140,7 @@ class TicketResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 30,
+      height: 50,
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,13 +151,13 @@ class TicketResults extends StatelessWidget {
             width: width,
             child: Text(
               title,
-              style: TextStyle(color: Colors.grey[500]),
+              style: TextStyle(color: Colors.grey[500], fontSize: 17),
             ),
           ),
           SizedBox(width: 10),
           Text(
             content,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black, fontSize: 20),
           )
         ],
       ),
