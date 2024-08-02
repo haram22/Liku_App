@@ -15,7 +15,7 @@ class OrangeButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           backgroundColor: primaryOrange,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5), // 여기에 원하는 radius 값을 설정하세요
+            borderRadius: BorderRadius.circular(5),
           ),
         ),
         onPressed: () {
