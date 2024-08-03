@@ -15,6 +15,14 @@ class SelectTime extends StatefulWidget {
 class _SelectTimeState extends State<SelectTime> {
   final List<Schedule> schedules = createSampleData();
   int select = -2;
+  int currentPage = 0;
+  final int itemsPerPage = 5;
+
+  void updatePage(int newPage) {
+    setState(() {
+      currentPage = newPage;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,38 +67,52 @@ class _SelectTimeState extends State<SelectTime> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: ListView.builder(
-                      itemCount: schedules.length,
+                      itemCount: itemsPerPage,
                       itemBuilder: (context, index) {
+                        int scheduleIndex = currentPage * itemsPerPage + index;
+                        if (scheduleIndex >= schedules.length) {
+                          return Container();
+                        }
                         return Container(
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.grey.shade400), // 테두리 색상과 두께
                             borderRadius: BorderRadius.circular(5), // 모서리 둥글게
-                            color:
-                                select == index ? primaryPurple : Colors.white,
+                            color: select == scheduleIndex
+                                ? primaryPurple
+                                : Colors.white,
                           ),
                           padding: const EdgeInsets.all(10),
                           child: Row(
                             children: <Widget>[
-                              boxContainer(schedules[index].time, index,
+                              boxContainer(
+                                  schedules[scheduleIndex].time, scheduleIndex,
                                   flex: 1),
-                              boxContainer(schedules[index].destStation, index,
+                              boxContainer(schedules[scheduleIndex].destStation,
+                                  scheduleIndex,
                                   flex: 2),
-                              boxContainer(schedules[index].form, index,
-                                  flex: 1),
-                              boxContainer(schedules[index].grade, index,
-                                  flex: 1),
-                              boxContainer(schedules[index].company, index,
-                                  flex: 1),
-                              boxContainer(schedules[index].duration, index,
-                                  flex: 1),
-                              boxContainer(schedules[index].state, index,
+                              boxContainer(
+                                  schedules[scheduleIndex].form, scheduleIndex,
                                   flex: 1),
                               boxContainer(
-                                  schedules[index].leftSeat.toString(), index,
+                                  schedules[scheduleIndex].grade, scheduleIndex,
+                                  flex: 1),
+                              boxContainer(schedules[scheduleIndex].company,
+                                  scheduleIndex,
+                                  flex: 1),
+                              boxContainer(schedules[scheduleIndex].duration,
+                                  scheduleIndex,
                                   flex: 1),
                               boxContainer(
-                                  schedules[index].totalSeat.toString(), index,
+                                  schedules[scheduleIndex].state, scheduleIndex,
+                                  flex: 1),
+                              boxContainer(
+                                  schedules[scheduleIndex].leftSeat.toString(),
+                                  scheduleIndex,
+                                  flex: 1),
+                              boxContainer(
+                                  schedules[scheduleIndex].totalSeat.toString(),
+                                  scheduleIndex,
                                   flex: 1),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -101,7 +123,7 @@ class _SelectTimeState extends State<SelectTime> {
                                     foregroundColor: Colors.white),
                                 onPressed: () {
                                   setState(() {
-                                    select = index;
+                                    select = scheduleIndex;
                                   });
                                 },
                                 child: const Text(
@@ -119,9 +141,9 @@ class _SelectTimeState extends State<SelectTime> {
                 Container(
                   color: Colors.white,
                   height: MediaQuery.of(context).size.height * 0.2,
-                  child: const Stack(
+                  child: Stack(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
@@ -151,7 +173,12 @@ class _SelectTimeState extends State<SelectTime> {
                       Positioned(
                         top: 10,
                         right: 10,
-                        child: ButtonComp(),
+                        child: ButtonComp(
+                          page: currentPage,
+                          totalItems: schedules.length,
+                          itemsPerPage: itemsPerPage,
+                          onPageChanged: updatePage,
+                        ),
                       )
                     ],
                   ),

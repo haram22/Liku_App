@@ -27,7 +27,7 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    //
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

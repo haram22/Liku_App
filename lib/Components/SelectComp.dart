@@ -197,7 +197,18 @@ class _SelectCompState extends State<SelectComp> {
 }
 
 class ButtonComp extends StatelessWidget {
-  const ButtonComp({super.key});
+  final int page;
+  final int totalItems;
+  final int itemsPerPage;
+  final ValueChanged<int> onPageChanged;
+
+  const ButtonComp({
+    super.key,
+    required this.page,
+    required this.totalItems,
+    required this.itemsPerPage,
+    required this.onPageChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -211,17 +222,17 @@ class ButtonComp extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
             foregroundColor: Colors.white,
           ),
-          onPressed: () {
-            //
-          },
-          child: Text(
+          onPressed: page > 0
+              ? () {
+                  onPageChanged(page - 1);
+                }
+              : null,
+          child: const Text(
             '< 이전',
             style: TextStyle(fontSize: 20),
           ),
         ),
-        SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryBlue,
@@ -229,10 +240,12 @@ class ButtonComp extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
             foregroundColor: Colors.white,
           ),
-          onPressed: () {
-            //
-          },
-          child: Text(
+          onPressed: (page + 1) * itemsPerPage < totalItems
+              ? () {
+                  onPageChanged(page + 1);
+                }
+              : null,
+          child: const Text(
             '이후 >',
             style: TextStyle(fontSize: 20),
           ),
