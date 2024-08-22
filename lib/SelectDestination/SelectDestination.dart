@@ -38,7 +38,7 @@ class _SelectdestinationState extends State<Selectdestination> {
                   Container(
                     color: primaryPurple,
                     width: double.infinity,
-                    height: 200,
+                    height: 195,
                     child: Center(
                       child: LocationContainer(
                         onRegionSelected: _handleRegionSelected,
@@ -46,7 +46,7 @@ class _SelectdestinationState extends State<Selectdestination> {
                     ),
                   ),
                   Container(
-                    color: Colors.yellow,
+                    color: primaryPurple,
                     width: double.infinity,
                     height: 480,
                     child: Center(

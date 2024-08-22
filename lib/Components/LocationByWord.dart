@@ -12,7 +12,7 @@ class LocationByWord extends StatefulWidget {
 }
 
 class _LocationByWordState extends State<LocationByWord> {
-  String? _selectedConsonant; // 선택된 초성
+  String? _selectedConsonant;
 
   final Map<String, List<String>> regionLocations = {
     '특별/광역/자치': ['서울', '부산', '대구'],
@@ -64,7 +64,7 @@ class _LocationByWordState extends State<LocationByWord> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(3.0),
+          padding: EdgeInsets.all(5.0),
           color: primaryBlack,
           child: GridView.count(
             crossAxisCount: 8,
@@ -89,7 +89,10 @@ class _LocationByWordState extends State<LocationByWord> {
                   child: Center(
                     child: Text(
                       consonant,
-                      style: TextStyle(fontSize: 16.0, color: primaryBlack),
+                      style: TextStyle(
+                          fontSize: 26.0,
+                          color: primaryBlack,
+                          fontWeight: FontWeight.w800),
                     ),
                   ),
                 ),
@@ -97,34 +100,45 @@ class _LocationByWordState extends State<LocationByWord> {
             }).toList(),
           ),
         ),
-        Expanded(
-          child: items != null
-              ? GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 3.0,
-                  mainAxisSpacing: 15.0,
-                  childAspectRatio: 2.5,
-                  children: List.generate(items.length, (index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: primaryBlack,
-                        borderRadius: BorderRadius.circular(4.0),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 330,
+            color: Colors.white,
+            child: Expanded(
+              child: items != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.count(
+                        crossAxisCount: 5,
+                        crossAxisSpacing: 3.0,
+                        mainAxisSpacing: 15.0,
+                        childAspectRatio: 2.5,
+                        children: List.generate(items.length, (index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: primaryBlack,
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                items[index],
+                                style: TextStyle(
+                                    fontSize: 26.0, color: Colors.white),
+                              ),
+                            ),
+                          );
+                        }),
                       ),
-                      child: Center(
-                        child: Text(
-                          items[index],
-                          style: TextStyle(fontSize: 16.0, color: Colors.white),
-                        ),
+                    )
+                  : Center(
+                      child: Text(
+                        '지역을 선택하세요',
+                        style: TextStyle(fontSize: 20.0),
                       ),
-                    );
-                  }),
-                )
-              : Center(
-                  child: Text(
-                    '지역을 선택하세요',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                ),
+                    ),
+            ),
+          ),
         ),
       ],
     );
