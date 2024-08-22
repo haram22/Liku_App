@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
+import 'package:liku/RandomTest.dart';
+import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
 import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
@@ -42,6 +46,15 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Selectdestination(),
+      initialRoute: '/selectTime',
+      routes: {
+        '/home': (context) => Home(),
+        // '/selectDest': (context) => ,
+        '/selectTime': (context) => SelectTime(),
+        '/selectSeat': (context) => Selectseat(),
+        // '/checkTicket': (context) => ,
+        // '/payment': (context) => ,
+      },
     );
   }
 }
@@ -89,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 450,
                   height: 82,
                   child: LocationContainer()),
-              ButtonComp()
+              //ButtonComp()
             ],
           ),
         ),
