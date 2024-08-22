@@ -8,7 +8,6 @@ import 'package:liku/SelectTime/SelectTime.dart';
 import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
 import 'Components/Location.dart';
-import 'Components/TextWord.dart';
 import 'Home/Home.dart';
 import 'Payment/Payment.dart';
 import 'SelectDestination/SelectDestination.dart';
@@ -45,12 +44,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Selectdestination(),
-      initialRoute: '/selectTime',
+      initialRoute: '/selectDest',
       routes: {
         '/home': (context) => Home(),
         // '/selectDest': (context) => ,
         '/selectTime': (context) => SelectTime(),
         '/selectSeat': (context) => Selectseat(),
+        '/selectDest': (context) => Selectdestination(),
         // '/checkTicket': (context) => ,
         // '/payment': (context) => ,
       },
@@ -90,17 +90,20 @@ class _MyHomePageState extends State<MyHomePage> {
               ShowInfo(),
               FinalResult(title: "총 수량", data: "10"),
               TicketResults(title: "출발지", content: "동서울", width: 100),
-              Container(
-                  alignment: Alignment.center,
-                  width: 400,
-                  height: 72,
-                  child: TextWordView()),
               SizedBox(height: 5),
               Container(
                   alignment: Alignment.center,
                   width: 450,
                   height: 82,
-                  child: LocationContainer()),
+                  child: LocationContainer(
+                    onRegionSelected: (String selectedRegion) {
+                      if (selectedRegion == '강원도') {
+                        print('강원도가 선택되었습니다.');
+                      } else {
+                        print('$selectedRegion가 선택되었습니다.');
+                      }
+                    },
+                  )),
               //ButtonComp()
             ],
           ),

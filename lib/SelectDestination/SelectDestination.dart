@@ -4,7 +4,6 @@ import '../Components/Comp.dart';
 import '../Components/Location.dart';
 import '../Components/LocationByWord.dart';
 import '../Components/SelectComp.dart';
-import '../Components/TextWord.dart';
 import '../Components/TopBottomComp.dart';
 import '../Theme/Colors.dart';
 
@@ -16,6 +15,14 @@ class Selectdestination extends StatefulWidget {
 }
 
 class _SelectdestinationState extends State<Selectdestination> {
+  String? _selectedRegion;
+
+  void _handleRegionSelected(String region) {
+    setState(() {
+      _selectedRegion = region;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,30 +36,25 @@ class _SelectdestinationState extends State<Selectdestination> {
               child: Column(
                 children: [
                   Container(
-                    color: primaryBlack,
+                    color: primaryPurple,
                     width: double.infinity,
-                    height: 170,
-                    child: Center(child: LocationContainer()),
+                    height: 200,
+                    child: Center(
+                      child: LocationContainer(
+                        onRegionSelected: _handleRegionSelected,
+                      ),
+                    ),
                   ),
                   Container(
-                    color: primaryBlack,
+                    color: Colors.yellow,
                     width: double.infinity,
-                    height: 125,
-                    child: Center(child: TextWordView()),
+                    height: 480,
+                    child: Center(
+                      child: LocationByWord(
+                        selectedRegion: _selectedRegion,
+                      ),
+                    ),
                   ),
-                  Container(
-                    color: primaryBlack,
-                    width: double.infinity,
-                    height: 320,
-                    child: Center(child: LocationByWord()),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 50.0, right: 100),
-                  //   child: Positioned(
-                  //     top: 50,
-                  //     child: ButtonComp(),
-                  //   ),
-                  // )
                 ],
               ),
             ),
