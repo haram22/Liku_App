@@ -46,13 +46,13 @@ class _SelectdestinationState extends State<Selectdestination> {
                     height: 320,
                     child: Center(child: LocationByWord()),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50.0, right: 100),
-                    child: Positioned(
-                      top: 50,
-                      child: ButtonComp(),
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 50.0, right: 100),
+                  //   child: Positioned(
+                  //     top: 50,
+                  //     child: ButtonComp(),
+                  //   ),
+                  // )
                 ],
               ),
             ),

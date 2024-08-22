@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
-import 'package:liku/RandomTest.dart';
 import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
 import 'CheckTicket/CheckTicket.dart';
