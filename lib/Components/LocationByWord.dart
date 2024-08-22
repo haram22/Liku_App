@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liku/Components/SelectComp.dart';
 import '../Theme/Colors.dart';
 
 class LocationByWord extends StatefulWidget {
@@ -13,6 +14,7 @@ class LocationByWord extends StatefulWidget {
 
 class _LocationByWordState extends State<LocationByWord> {
   String? _selectedConsonant;
+  String? _selectedLocation;
 
   final Map<String, List<String>> regionLocations = {
     '특별/광역/자치': ['서울', '부산', '대구'],
@@ -63,6 +65,7 @@ class _LocationByWordState extends State<LocationByWord> {
 
     return Column(
       children: [
+        // 자음 선택 그리드
         Container(
           padding: EdgeInsets.all(5.0),
           color: primaryBlack,
@@ -100,46 +103,89 @@ class _LocationByWordState extends State<LocationByWord> {
             }).toList(),
           ),
         ),
+        // 출발지 목록
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            height: 330,
+            height: 280,
             color: Colors.white,
-            child: Expanded(
-              child: items != null
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GridView.count(
-                        crossAxisCount: 5,
-                        crossAxisSpacing: 3.0,
-                        mainAxisSpacing: 15.0,
-                        childAspectRatio: 2.5,
-                        children: List.generate(items.length, (index) {
-                          return Container(
+            child: items != null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridView.count(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 3.0,
+                      mainAxisSpacing: 15.0,
+                      childAspectRatio: 2.5,
+                      children: items.map((item) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedLocation = item;
+                            });
+                          },
+                          child: Container(
                             decoration: BoxDecoration(
-                              color: primaryBlack,
+                              color: _selectedLocation == item
+                                  ? primaryPurple
+                                  : primaryBlack,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
                             child: Center(
                               child: Text(
-                                items[index],
+                                item,
                                 style: TextStyle(
                                     fontSize: 26.0, color: Colors.white),
                               ),
                             ),
-                          );
-                        }),
-                      ),
-                    )
-                  : Center(
-                      child: Text(
-                        '지역을 선택하세요',
-                        style: TextStyle(fontSize: 20.0),
-                      ),
+                          ),
+                        );
+                      }).toList(),
                     ),
-            ),
+                  )
+                : Center(
+                    child: Text(
+                      '지역을 선택하세요',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
           ),
         ),
+
+        if (_selectedLocation != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3)),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {},
+                child: const Text(
+                  '< 이전',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryBlue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3)),
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () {},
+                child: const Text(
+                  '이후 >',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          )
       ],
     );
   }
@@ -148,6 +194,14 @@ class _LocationByWordState extends State<LocationByWord> {
     final List<String>? items = regionLocations[widget.selectedRegion];
 
     if (items == null) return null;
+
+    if (_selectedConsonant == '기타') {
+      // 자음이 아닌 항목을 필터링
+      return items.where((item) {
+        final consonant = getConsonant(item);
+        return consonant == null;
+      }).toList();
+    }
 
     if (_selectedConsonant != null) {
       return items.where((item) {
@@ -165,7 +219,7 @@ String? getConsonant(String input) {
 
   final int codeUnit = input.codeUnitAt(0);
 
-  // 한글의 범위인지 확인
+  // 한글 범위인지 확인
   if (codeUnit < 0xAC00 || codeUnit > 0xD7A3) {
     return null; // 한글이 아니면 null을 반환
   }
