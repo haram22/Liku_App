@@ -15,7 +15,7 @@ class OrangeButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           backgroundColor: primaryOrange,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5), // 여기에 원하는 radius 값을 설정하세요
+            borderRadius: BorderRadius.circular(5),
           ),
         ),
         onPressed: () {
@@ -140,7 +140,7 @@ class TicketResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 400,
-      height: 30,
+      height: 50,
       color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,13 +151,13 @@ class TicketResults extends StatelessWidget {
             width: width,
             child: Text(
               title,
-              style: TextStyle(color: Colors.grey[500]),
+              style: TextStyle(color: Colors.grey[500], fontSize: 17),
             ),
           ),
           SizedBox(width: 10),
           Text(
             content,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black, fontSize: 20),
           )
         ],
       ),

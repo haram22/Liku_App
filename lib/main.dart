@@ -3,12 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
-import 'package:liku/RandomTest.dart';
 import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
+import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
-import 'Components/GridComp.dart';
+import 'Components/Location.dart';
+import 'Components/TextWord.dart';
 import 'Home/Home.dart';
+import 'Payment/Payment.dart';
+import 'SelectDestination/SelectDestination.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      home: Selectdestination(),
       initialRoute: '/selectTime',
       routes: {
         '/home': (context) => Home(),
