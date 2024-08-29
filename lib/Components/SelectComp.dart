@@ -3,7 +3,8 @@ import 'package:liku/Theme/Colors.dart';
 
 class SelectComp extends StatefulWidget {
   final Function(int adult, int mid, int child) onCountChanged;
-  const SelectComp({super.key, required this.onCountChanged});
+  final int leftSeats;
+  const SelectComp({super.key, required this.onCountChanged, required this.leftSeats});
 
   @override
   State<SelectComp> createState() => _SelectCompState();
@@ -65,10 +66,12 @@ class _SelectCompState extends State<SelectComp> {
                             backgroundColor: primaryPurple,
                             shape: RoundedRectangleBorder()),
                         onPressed: () {
-                          setState(() {
-                            adult++;
-                            widget.onCountChanged(1, 0, 0);
-                          });
+                          if(adult + mid + child <= widget.leftSeats){
+                            setState(() {
+                              adult++;
+                              widget.onCountChanged(1, 0, 0);
+                            });
+                          }
                         },
                         child: Icon(Icons.add)),
                   ],
@@ -123,10 +126,12 @@ class _SelectCompState extends State<SelectComp> {
                           backgroundColor: primaryPurple,
                           shape: RoundedRectangleBorder()),
                       onPressed: () {
-                        setState(() {
-                          mid++;
-                          widget.onCountChanged(0, 1, 0);
-                        });
+                        if(adult + mid + child <= widget.leftSeats){
+                          setState(() {
+                            mid++;
+                            widget.onCountChanged(0, 1, 0);
+                          });
+                        }
                       },
                       child: Icon(Icons.add)),
                 ],
@@ -180,10 +185,12 @@ class _SelectCompState extends State<SelectComp> {
                           backgroundColor: primaryPurple,
                           shape: RoundedRectangleBorder()),
                       onPressed: () {
-                        setState(() {
-                          child++;
-                          widget.onCountChanged(0, 0, 1);
-                        });
+                        if(adult + mid + child <= widget.leftSeats){
+                          setState(() {
+                            child++;
+                            widget.onCountChanged(0, 0, 1);
+                          });
+                        }
                       },
                       child: Icon(Icons.add)),
                 ],
@@ -200,6 +207,7 @@ class ButtonComp extends StatelessWidget {
   final int page;
   final int totalItems;
   final int itemsPerPage;
+  final int pass;
   final ValueChanged<int> onPageChanged;
 
   const ButtonComp({
@@ -207,13 +215,14 @@ class ButtonComp extends StatelessWidget {
     required this.page,
     required this.totalItems,
     required this.itemsPerPage,
-    required this.onPageChanged,
+    required this.onPageChanged, 
+    required this.pass,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -224,7 +233,7 @@ class ButtonComp extends StatelessWidget {
           ),
           onPressed: page > 0
               ? () {
-                  onPageChanged(page - 1);
+                  onPageChanged(page - pass);
                 }
               : null,
           child: const Text(
@@ -240,9 +249,9 @@ class ButtonComp extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
             foregroundColor: Colors.white,
           ),
-          onPressed: (page + 1) * itemsPerPage < totalItems
+          onPressed: (page + pass) * itemsPerPage < totalItems
               ? () {
-                  onPageChanged(page + 1);
+                  onPageChanged(page + pass);
                 }
               : null,
           child: const Text(
