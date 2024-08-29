@@ -43,16 +43,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Selectdestination(),
-      initialRoute: '/selectDest',
+      initialRoute: '/home',
       routes: {
         '/home': (context) => Home(),
-        // '/selectDest': (context) => ,
         '/selectTime': (context) => SelectTime(),
         '/selectSeat': (context) => Selectseat(),
         '/selectDest': (context) => Selectdestination(),
-        // '/checkTicket': (context) => ,
-        // '/payment': (context) => ,
+        '/checkTicket': (context) => Checkticket(),
+        '/payment': (context) => PaymentPage(),
       },
     );
   }
@@ -86,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              OrangeButton(text: "text"),
+              // OrangeButton(text: "text"),
               ShowInfo(),
               FinalResult(title: "총 수량", data: "10"),
               TicketResults(title: "출발지", content: "동서울", width: 100),

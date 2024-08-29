@@ -16,7 +16,7 @@ class Selectdestination extends StatefulWidget {
 
 class _SelectdestinationState extends State<Selectdestination> {
   String? _selectedRegion;
-
+  final ValueNotifier<int> currentPageNotifier = ValueNotifier<int>(0);
   void _handleRegionSelected(String region) {
     setState(() {
       _selectedRegion = region;
@@ -38,20 +38,22 @@ class _SelectdestinationState extends State<Selectdestination> {
                   Container(
                     color: primaryPurple,
                     width: double.infinity,
-                    height: 200,
+                    // height: 200,
                     child: Center(
                       child: LocationContainer(
                         onRegionSelected: _handleRegionSelected,
                       ),
                     ),
                   ),
-                  Container(
-                    color: Colors.yellow,
-                    width: double.infinity,
-                    height: 480,
-                    child: Center(
-                      child: LocationByWord(
-                        selectedRegion: _selectedRegion,
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      width: double.infinity,
+                      //height: 420,
+                      child: Center(
+                        child: LocationByWord(
+                          selectedRegion: _selectedRegion,
+                        ),
                       ),
                     ),
                   ),

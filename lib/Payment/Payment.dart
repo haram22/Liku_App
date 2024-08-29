@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:lottie/lottie.dart';
 import '../Components/TopBottomComp.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -88,7 +89,14 @@ class _PaymentPageState extends State<PaymentPage> {
                       ]),
                     ),
                   ),
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset('assets/payment.json', width: 300),
+                    Lottie.asset('assets/payment2.json', width: 300),
+                  ],
+                ),
               ],
             ),
           )

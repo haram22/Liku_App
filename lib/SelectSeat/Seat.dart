@@ -1,13 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:liku/Components/global.dart';
 import 'package:liku/Theme/Colors.dart';
 
 class SeatSelectionScreen extends StatefulWidget {
   final bool alert;
   final int maxSelectableSeats;
+  final ValueChanged<int> onSeatSelected;
+  final ValueChanged<int> onLeftSeatsCalculated;
   const SeatSelectionScreen(
-      {super.key, required this.alert, required this.maxSelectableSeats});
+      {super.key, required this.alert, required this.maxSelectableSeats, required this.onSeatSelected, required this.onLeftSeatsCalculated});
 
   @override
   _SeatSelectionScreenState createState() => _SeatSelectionScreenState();
@@ -17,54 +20,13 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   // 좌석 예약 상태를 저장할 리스트
   List<int> reservedSeats = List<int>.generate(45, (index) => 0);
   List<int> seatNo = [
-    3,
-    6,
-    9,
-    12,
-    15,
-    18,
-    21,
-    24,
-    28,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    27,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    2,
-    5,
-    8,
-    11,
-    14,
-    17,
-    20,
-    23,
-    26,
-    1,
-    4,
-    7,
-    10,
-    13,
-    16,
-    19,
-    22,
-    25
+    3,  6,  9, 12, 15, 18, 21, 24, 28,  0, 
+    0,  0,  0,  0,  0,  0,  0, 27,  0,  0, 
+    0,  0,  0,  0,  0,  0,  0,  2,  5,  8, 
+    11, 14, 17, 20, 23, 26,  1,  4,  7, 10, 
+    13, 16, 19, 22, 25
   ];
   int selectedSeatCount = 0;
-
   List<int> selectedNumbers = [];
 
   void generateRandomNumbers() {
@@ -77,8 +39,9 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     ];
 
     final int numberOfElements = random.nextInt(8) + 3; // 3 to 10 elements
+    final int leftSeats = 27 - numberOfElements;
+    widget.onLeftSeatsCalculated(leftSeats);
     final Set<int> numberSet = {};
-
     while (numberSet.length < numberOfElements) {
       numberSet.add(availableNumbers[random.nextInt(availableNumbers.length)]);
     }
@@ -86,6 +49,8 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
     setState(() {
       selectedNumbers = numberSet.toList();
     });
+
+    // widget.onLeftSeatsCalculated(leftSeats);
   }
 
   @override
@@ -110,12 +75,18 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
   }
 
   void _clearAllSelections() {
-    for (int i = 0; i < reservedSeats.length; i++) {
-      if (reservedSeats[i] == 1) {
-        reservedSeats[i] = 0;
-      }
-    }
-    selectedSeatCount = 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+          for (int i = 0; i < reservedSeats.length; i++) {
+            if (reservedSeats[i] == 1) {
+              reservedSeats[i] = 0;
+            }
+          }
+          selectedSeatCount = 0;
+          seatNotifier.value.clear();
+          widget.onSeatSelected(selectedSeatCount);
+      });
+    });
   }
 
   void _toggleSeatSelection(int index) {
@@ -124,10 +95,13 @@ class _SeatSelectionScreenState extends State<SeatSelectionScreen> {
           selectedSeatCount < widget.maxSelectableSeats) {
         reservedSeats[index] = 1;
         selectedSeatCount++;
+        seatNotifier.value = List.from(seatNotifier.value)..add(seatNo[index]);
       } else if (reservedSeats[index] == 1) {
         reservedSeats[index] = 0;
         selectedSeatCount--;
+        seatNotifier.value = List.from(seatNotifier.value)..remove(seatNo[index]);
       }
+      widget.onSeatSelected(selectedSeatCount);
     });
   }
 

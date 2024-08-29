@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      // 버튼이 눌렸을 때 수행할 작업
+                      Navigator.pushReplacementNamed(context, '/selectDest');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple[800],

@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:liku/Components/global.dart';
 import 'package:liku/Theme/Colors.dart';
 import 'package:marquee/marquee.dart';
+
+import 'RealTime.dart';
 
 class Headercomp extends StatelessWidget implements PreferredSizeWidget {
   final String text;
@@ -27,6 +33,14 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
+                    currentPageNotifier.value = 0;
+                    destNotifier.value = "-";
+                    timeNotifier.value = "-";
+                    globalAdult.value = 0;
+                    globalMid.value = 0;
+                    globalChild.value = 0;
+                    globalFee.value = '';
+                    seatNotifier.value = [];
                     Navigator.pushReplacementNamed(context, '/home');
                   },
                   child: Column(
@@ -75,8 +89,8 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             // 오른쪽 구역
-            const Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
               child: Expanded(
                 child: DefaultTextStyle(
                   style: TextStyle(
@@ -85,12 +99,7 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                       fontWeight: FontWeight.bold),
                   child: Column(
                     children: [
-                      Text(
-                        '2022-11-25',
-                      ),
-                      Text(
-                        '10:33:02',
-                      ),
+                      RealTimeClock(),
                       Text(
                         '승차권잔여수량',
                         style: TextStyle(color: primaryRed),
@@ -203,7 +212,7 @@ class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             // 오른쪽 구역
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
               child: Expanded(
                 child: DefaultTextStyle(
@@ -213,12 +222,7 @@ class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
                       fontWeight: FontWeight.bold),
                   child: Column(
                     children: [
-                      Text(
-                        '2022-11-25',
-                      ),
-                      Text(
-                        '10:33:02',
-                      ),
+                      RealTimeClock(),
                       Text(
                         '승차권잔여수량',
                         style: TextStyle(color: primaryRed),
@@ -270,3 +274,4 @@ class BottomComp extends StatelessWidget {
     );
   }
 }
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liku/Components/Comp.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/Components/TopBottomComp.dart';
+import 'package:liku/Components/global.dart';
 import 'package:liku/SelectTime/Schedule.dart';
 import 'package:liku/Theme/Colors.dart';
 
@@ -124,6 +125,8 @@ class _SelectTimeState extends State<SelectTime> {
                                 onPressed: () {
                                   setState(() {
                                     select = scheduleIndex;
+                                    timeNotifier.value = schedules[scheduleIndex].time;
+                                    Navigator.pushReplacementNamed(context, '/selectSeat');
                                   });
                                 },
                                 child: const Text(
@@ -143,7 +146,7 @@ class _SelectTimeState extends State<SelectTime> {
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: Stack(
                     children: [
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
@@ -162,7 +165,7 @@ class _SelectTimeState extends State<SelectTime> {
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  "동서울 -> 양산 -> 부산 해운대",
+                                  "동서울 -> ${destNotifier.value}",
                                   style: TextStyle(fontSize: 15),
                                 )
                               ],
@@ -177,7 +180,8 @@ class _SelectTimeState extends State<SelectTime> {
                           page: currentPage,
                           totalItems: schedules.length,
                           itemsPerPage: itemsPerPage,
-                          onPageChanged: updatePage,
+                          onPageChanged: updatePage, 
+                          pass: 1,
                         ),
                       )
                     ],
