@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:liku/Components/global.dart';
+
 import '../Theme/Colors.dart';
 import 'SelectComp.dart';
 
@@ -14,6 +16,7 @@ class LocationByWord extends StatefulWidget {
 }
 
 class _LocationByWordState extends State<LocationByWord> {
+
   String? _selectedConsonant; // 선택된 초성
   final int itemsPerPage = 5;
   void updatePage(int newPage) {
@@ -67,8 +70,9 @@ class _LocationByWordState extends State<LocationByWord> {
     late String dest;
     return Column(
       children: [
+        // 자음 선택 그리드
         Container(
-          padding: EdgeInsets.all(3.0),
+          padding: EdgeInsets.all(5.0),
           color: primaryBlack,
           child: GridView.count(
             crossAxisCount: 8,
@@ -94,9 +98,11 @@ class _LocationByWordState extends State<LocationByWord> {
                   child: Center(
                     child: Text(
                       consonant,
+
                       style: TextStyle(fontSize: 16.0, color: _selectedConsonant == consonant || (_selectedConsonant == null && consonant == '전체')
                         ? Colors.white
                         : Colors.black,),
+
                     ),
                   ),
                 ),
@@ -104,6 +110,7 @@ class _LocationByWordState extends State<LocationByWord> {
             }).toList(),
           ),
         ),
+
         Expanded(
           child: items != null
               ? GridView.count(
@@ -162,6 +169,7 @@ class _LocationByWordState extends State<LocationByWord> {
         : SizedBox(), // items가 null일 때 빈 위젯을 반환
   ),
 )
+
       ],
     );
   }
@@ -170,6 +178,14 @@ class _LocationByWordState extends State<LocationByWord> {
     final List<String>? items = regionLocations[widget.selectedRegion];
 
     if (items == null) return null;
+
+    if (_selectedConsonant == '기타') {
+      // 자음이 아닌 항목을 필터링
+      return items.where((item) {
+        final consonant = getConsonant(item);
+        return consonant == null;
+      }).toList();
+    }
 
     if (_selectedConsonant != null) {
       return items.where((item) {
@@ -186,7 +202,7 @@ String? getConsonant(String input) {
 
   final int codeUnit = input.codeUnitAt(0);
 
-  // 한글의 범위인지 확인
+  // 한글 범위인지 확인
   if (codeUnit < 0xAC00 || codeUnit > 0xD7A3) {
     return null; // 한글이 아니면 null을 반환
   }

@@ -75,7 +75,9 @@ class _LocationContainerState extends State<LocationContainer> {
                   child: Center(
                     child: Text(
                       region,
+
                       style: const TextStyle(fontSize: 16.0, color: Colors.white),
+
                     ),
                   ),
                 ),
