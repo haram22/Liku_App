@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:liku/Components/global.dart';
 import '../Theme/Colors.dart';
+
 
 class LocationContainer extends StatefulWidget {
   final ValueChanged<String> onRegionSelected;
@@ -50,7 +51,7 @@ class _LocationContainerState extends State<LocationContainer> {
           padding: EdgeInsets.all(3.0),
           color: Colors.white,
           child: GridView.count(
-            crossAxisCount: 5,
+            crossAxisCount: 6,
             crossAxisSpacing: 3.0,
             mainAxisSpacing: 3.0,
             childAspectRatio: 2.5,
@@ -61,6 +62,7 @@ class _LocationContainerState extends State<LocationContainer> {
                   setState(() {
                     _selectedRegion = region;
                   });
+                  currentPageNotifier.value = 0;
                   widget.onRegionSelected(region);
                 },
                 child: Container(
@@ -73,7 +75,9 @@ class _LocationContainerState extends State<LocationContainer> {
                   child: Center(
                     child: Text(
                       region,
-                      style: TextStyle(fontSize: 26.0, color: Colors.white),
+
+                      style: const TextStyle(fontSize: 16.0, color: Colors.white),
+
                     ),
                   ),
                 ),

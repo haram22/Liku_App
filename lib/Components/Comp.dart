@@ -1,33 +1,95 @@
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:liku/Components/global.dart';
 import 'package:liku/Theme/Colors.dart';
 
 class OrangeButton extends StatelessWidget {
   final String text;
+  final int? selectedSeatCount;
+  final int? maxSelectableSeats;
 
-  const OrangeButton({Key? key, required this.text}) : super(key: key);
+  const OrangeButton({
+    super.key,
+    required this.text,
+    this.selectedSeatCount,
+    this.maxSelectableSeats,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 140,
-      height: 50,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          backgroundColor: primaryOrange,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+    String _info = '';
+
+    if (text == '선택완료') {
+      final bool isButtonEnabled = (selectedSeatCount != null &&
+          maxSelectableSeats != null &&
+          selectedSeatCount == maxSelectableSeats &&
+          maxSelectableSeats! > 0);
+
+      final VoidCallback? buttonAction = isButtonEnabled ? () {
+        if (globalAdult.value > 0) {
+          _info += '어른(${globalAdult.value})';
+        }
+        if (globalMid.value > 0) {
+          if (_info.isNotEmpty) _info += ', ';
+          _info += '중고생(${globalMid.value})';
+        }
+        if (globalChild.value > 0) {
+          if (_info.isNotEmpty) _info += ', ';
+          _info += '아동(${globalChild.value})';
+        }
+        globalInfo.value = _info;
+        seatNotifier.value.sort();
+        Navigator.pushReplacementNamed(context, '/checkTicket');
+      } : null;
+
+      return Container(
+        width: 140,
+        height: 50,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: isButtonEnabled
+                ? primaryOrange
+                : Colors.grey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+          onPressed: buttonAction,
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        onPressed: () {
-          print("button pressed");
-        },
-        child: Text(
-          text,
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      );
+    } else if (text == '카드결제') {
+      return Container(
+        width: 140,
+        height: 50,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            backgroundColor: primaryOrange,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/payment');
+          },
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    // 기본적으로 아무것도 안하는 경우 빈 위젯 반환
+    return SizedBox.shrink();
   }
 }
 
@@ -44,12 +106,12 @@ class ShowInfo extends StatelessWidget {
           children: [
             InfoContainer(title: "출발터미널", content: "동서울", color: primaryBlack),
             SizedBox(height: 2),
-            InfoContainer(title: "도착지선택", content: "-", color: subPurple),
+            InfoContainer(title: "도착지선택", content: destNotifier.value, color: subPurple),
             SizedBox(height: 2),
             InfoContainer(
-                title: "출발일선택", content: "2022-11-25", color: subPurple),
+                title: "출발일선택", content: DateFormat('yyyy-MM-dd').format(DateTime.now()), color: subPurple),
             SizedBox(height: 2),
-            InfoContainer(title: "출발시간선택", content: "10:33", color: subPurple)
+            InfoContainer(title: "출발시간선택", content: timeNotifier.value, color: subPurple)
           ],
         ),
       ),

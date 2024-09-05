@@ -1,3 +1,5 @@
+import 'package:liku/Components/global.dart';
+
 class Schedule {
   final String time;
   final String destStation;
@@ -25,7 +27,7 @@ List<Schedule> createSampleData() {
   return [
     Schedule(
         time: '10:50',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -35,7 +37,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '12:40',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -45,7 +47,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '14:10',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -55,7 +57,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '17:00',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -65,7 +67,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '18:30',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -75,7 +77,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '19:30',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -85,7 +87,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '23:55',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
@@ -95,7 +97,7 @@ List<Schedule> createSampleData() {
         totalSeat: 28),
     Schedule(
         time: '23:59',
-        destStation: '부산해운대',
+        destStation: destNotifier.value,
         form: '직행',
         grade: '우등',
         company: '경남고속',
