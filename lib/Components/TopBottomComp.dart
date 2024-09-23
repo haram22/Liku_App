@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:liku/Components/global.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:liku/utils/network_utils.dart';
 import 'package:marquee/marquee.dart';
 
 import 'RealTime.dart';
@@ -33,6 +34,7 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
+                    NetworkUtils.sendMessageToServer("사용자는 처음화면으로 가는 버튼을 눌렀습니다.");
                     currentPageNotifier.value = 0;
                     destNotifier.value = "-";
                     timeNotifier.value = "-";

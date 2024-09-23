@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liku/Components/global.dart';
+import 'package:liku/utils/network_utils.dart';
 import '../Theme/Colors.dart';
 
 
@@ -60,6 +61,7 @@ class _LocationContainerState extends State<LocationContainer> {
               return GestureDetector(
                 onTap: () {
                   setState(() {
+                    // NetworkUtils.sendMessageToServer("목적지 선택 화면에서 {$region}을 선택했습니다.");
                     _selectedRegion = region;
                   });
                   currentPageNotifier.value = 0;
