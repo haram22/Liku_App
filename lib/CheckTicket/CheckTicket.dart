@@ -34,7 +34,7 @@ class _CheckticketState extends State<Checkticket> {
                         textAlign: TextAlign.center,
                         text: const TextSpan(children: [
                           TextSpan(
-                              text: "티켓 내역 확인하기", style: TextStyle(fontSize: 40))
+                              text: "티켓 내역 확인하기", style: TextStyle(fontSize: 40, color: Colors.white))
                         ]),
                       ),
                     ),

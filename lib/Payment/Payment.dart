@@ -30,7 +30,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: const TextSpan(children: [
-                        TextSpan(text: "카드 결제", style: TextStyle(fontSize: 40))
+                        TextSpan(text: "카드 결제", style: TextStyle(fontSize: 40, color: Colors.white))
                       ]),
                     ),
                   ),
