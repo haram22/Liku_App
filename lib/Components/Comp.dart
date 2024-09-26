@@ -1,10 +1,10 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:liku/Components/global.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:liku/utils/network_utils.dart';
 
 class OrangeButton extends StatelessWidget {
   final String text;
@@ -42,6 +42,7 @@ class OrangeButton extends StatelessWidget {
         }
         globalInfo.value = _info;
         seatNotifier.value.sort();
+        NetworkUtils.sendMessageToServer("사용자는 좌석 선택 화면에서 결제 완료 버튼을 눌렀습니다.");
         Navigator.pushReplacementNamed(context, '/checkTicket');
       } : null;
 
@@ -77,6 +78,7 @@ class OrangeButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
+            NetworkUtils.sendMessageToServer("사용자는 결제 화면에서 결제하기 버튼을 눌렀습니다. 그리고 끝화면으로 넘어갑니다.");
             Navigator.pushReplacementNamed(context, '/payment');
           },
           child: Text(

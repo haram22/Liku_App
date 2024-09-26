@@ -5,6 +5,7 @@ import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/global.dart';
 import 'package:liku/SelectTime/Schedule.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:liku/utils/network_utils.dart';
 
 class SelectTime extends StatefulWidget {
   const SelectTime({super.key});
@@ -126,6 +127,7 @@ class _SelectTimeState extends State<SelectTime> {
                                   setState(() {
                                     select = scheduleIndex;
                                     timeNotifier.value = schedules[scheduleIndex].time;
+                                    NetworkUtils.sendMessageToServer("버스시간 선택 화면에서 좌석 선택화면으로 넘어갑니다.");
                                     Navigator.pushReplacementNamed(context, '/selectSeat');
                                   });
                                 },

@@ -57,13 +57,13 @@ class _SelectseatState extends State<Selectseat> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: const TextSpan(children: [
-                        TextSpan(text: "원하시는 ", style: TextStyle(fontSize: 30)),
+                        TextSpan(text: "원하시는 ", style: TextStyle(fontSize: 30, color: Colors.white)),
                         TextSpan(
                             text: "승차권수량을 +, -로 ",
                             style:
                                 TextStyle(fontSize: 30, color: primaryYellow)),
                         TextSpan(
-                            text: "조정하세요.", style: TextStyle(fontSize: 30)),
+                            text: "조정하세요.", style: TextStyle(fontSize: 30, color: Colors.white)),
                       ]),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:liku/utils/network_utils.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -98,7 +99,8 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      // 버튼이 눌렸을 때 수행할 작업
+                      print("버튼이 눌렸습니다");
+                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.");
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryOrange,
@@ -132,6 +134,7 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
+                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 보라색 버튼을 눌렀습니다.");
                       Navigator.pushReplacementNamed(context, '/selectDest');
                     },
                     style: ElevatedButton.styleFrom(
