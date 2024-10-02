@@ -12,6 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +135,7 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 보라색 버튼을 눌렀습니다.");
+                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 보라색 버튼을 눌렀습니다. 목적지 화면으로 이동합니다.");
                       Navigator.pushReplacementNamed(context, '/selectDest');
                     },
                     style: ElevatedButton.styleFrom(
