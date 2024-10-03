@@ -30,7 +30,7 @@ class Message(BaseModel):
 # gpt-4o-mini
 # gpt-4o
 # LangChain 설정
-llm = ChatOpenAI(model= 'gpt-4o-mini', temperature=0.7)
+llm = ChatOpenAI(model= 'gpt-4o', temperature=0.3)
 
 # 파일 경로 확인
 json_file_path = Path('kiosk.json')
@@ -83,10 +83,7 @@ The scenario that the user must follow::
 Button information pressed by the user:
 {question}
 
-Record of buttons previously pressed by the user:
-{history}
-
-답변 (한국어로, 1줄로 답변):
+답변 (한국어로, 1줄만):
 """
 prompt = PromptTemplate(template=prompt_template, input_variables=["scenario", "context", "manual", "history","question"])
 
@@ -112,10 +109,10 @@ async def chat(message: Message):
     print('사용자 입력 >> ' + message.content)
     response = ask_question(message.content)
     # 답변을 출력
-    print('리쿠 답변 >> ' + response)
+    print('AI 답변 >> ' + response)
     with open('history.txt', 'a', encoding='utf-8') as file:
         file.write(f'사용자 입력 >> {message.content}\n')
-        file.write(f'리쿠 답변 >>  {response}\n\n')
+        # file.write(f'AI 답변 >>  {response}\n\n')
     return {"response": response}
 # uvicorn main:app --reload
 # uvicorn main:app --reload --host 0.0.0.0 --port 8000
