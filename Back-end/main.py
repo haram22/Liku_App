@@ -14,6 +14,7 @@ import random
 
 # OpenAI 클라이언트 및 FastAPI 설정
 app = FastAPI()
+from langchain.schema import Document
 
 # CORS 설정 추가
 app.add_middleware(
