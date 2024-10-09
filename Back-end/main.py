@@ -1,19 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings  # OpenAIEmbeddings를 langchain_openai에서 가져옴
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
-from langchain.schema.runnable import RunnableSequence  # RunnableSequence 가져오기
+from langchain.schema.runnable import RunnableSequence
 from langchain_community.document_loaders import TextLoader, JSONLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from fastapi.middleware.cors import CORSMiddleware
-from pathlib import Path  # 파일 경로 확인을 위한 Path 사용
+from pathlib import Path
 from typing import List, Dict
 import json
+import random
 
 # OpenAI 클라이언트 및 FastAPI 설정
 app = FastAPI()
-from langchain.schema import Document
+
 # CORS 설정 추가
 app.add_middleware(
     CORSMiddleware,
@@ -37,6 +38,37 @@ json_file_path = Path('kiosk.json')
 manual_file_path = Path('manual.txt')
 scenario_file_path = Path('scenario.txt')
 history_file_path = Path('history.txt')
+
+# 시나리오 생성 함수 정의
+def load_data(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+def generate_scenario():
+    # 각 JSON 파일에서 데이터 로드
+    time_data = load_data('time.json')['time']
+    people_data = load_data('people.json')['people']
+    destination_data = load_data('destination.json')['destination']
+    
+    # 랜덤으로 시간, 인원, 목적지 선택
+    chosen_time = random.choice(time_data)
+    chosen_people = random.choice(people_data)
+    chosen_destination = random.choice(destination_data)['name']
+    
+    # 시나리오 텍스트 생성
+    scenario_text = f"목적지 = \"{chosen_destination}\"\n버스시간 = \"{chosen_time}\"\n인원 = \"{chosen_people}\"\n"
+    
+    # 시나리오를 scenario.txt에 저장
+    with open('scenario.txt', 'w', encoding='utf-8') as file:
+        file.write(scenario_text)
+    
+    return scenario_text
+
+# 앱이 시작될 때 시나리오 생성
+@app.on_event("startup")
+def create_scenario_on_startup():
+    scenario = generate_scenario()
+    print(f"생성된 시나리오:\n{scenario}")
 
 # JSON 파일 로드
 if json_file_path.exists():
@@ -77,7 +109,7 @@ Kiosk Context:
 User Manual:
 {manual}
 
-The scenario that the user must follow::
+The scenario that the user must follow:
 {scenario}
 
 Button information pressed by the user:
@@ -85,7 +117,7 @@ Button information pressed by the user:
 
 답변 (한국어로, 1줄만):
 """
-prompt = PromptTemplate(template=prompt_template, input_variables=["scenario", "context", "manual", "history","question"])
+prompt = PromptTemplate(template=prompt_template, input_variables=["scenario", "context", "manual", "history", "question"])
 
 qa_chain = prompt | llm
 
@@ -98,10 +130,6 @@ def ask_question(query):
     
     return answer.content
 
-
-with open('history.txt', 'w', encoding='utf-8') as file:
-    pass
-
 # FastAPI 라우트 정의
 @app.post("/chat")
 async def chat(message: Message):
@@ -112,7 +140,15 @@ async def chat(message: Message):
     print('AI 답변 >> ' + response)
     with open('history.txt', 'a', encoding='utf-8') as file:
         file.write(f'사용자 입력 >> {message.content}\n')
-        # file.write(f'AI 답변 >>  {response}\n\n')
+        file.write(f'AI 답변 >>  {response}\n\n')
     return {"response": response}
+
+# 시나리오 텍스트 확인용 라우트
+@app.get("/scenario")
+async def get_scenario():
+    with open('scenario.txt', 'r', encoding='utf-8') as file:
+        scenario = file.read()
+    return {"scenario": scenario}
+
 # uvicorn main:app --reload
 # uvicorn main:app --reload --host 0.0.0.0 --port 8000
