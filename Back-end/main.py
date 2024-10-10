@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path  # 파일 경로 확인을 위한 Path 사용
 from typing import List, Dict
 import json
+import random
 
 # OpenAI 클라이언트 및 FastAPI 설정
 app = FastAPI()
@@ -38,6 +39,40 @@ manual_file_path = Path('manual.txt')
 scenario_file_path = Path('scenario.txt')
 history_file_path = Path('history.txt')
 
+# 시나리오 생성 함수 정의
+def load_data(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return json.load(file)
+
+def generate_scenario():
+    # 각 JSON 파일에서 데이터 로드
+    time_data = load_data('time.json')['time']
+    people_data = load_data('people.json')['people']
+    destination_data = load_data('destination.json')['destination']
+    
+    # 랜덤으로 시간, 인원, 목적지 선택
+    chosen_time = random.choice(time_data)
+    chosen_people = random.choice(people_data)
+    chosen_destination = random.choice(destination_data)['name']
+    
+    # 시나리오 텍스트 생성
+    scenario_text = f"목적지 = \"{chosen_destination}\"\n버스시간 = \"{chosen_time}\"\n인원 = \"{chosen_people}\"\n"
+    
+    # 시나리오를 scenario.txt에 저장
+    with open('scenario.txt', 'w', encoding='utf-8') as file:
+        file.write(scenario_text)
+    
+    return scenario_text
+
+# 앱이 시작될 때 시나리오 생성
+@app.on_event("startup")
+def create_scenario_on_startup():
+    scenario = generate_scenario()
+    print(f"생성된 시나리오:\n{scenario}")
+    global scenario_content
+    with open('scenario.txt', 'r', encoding='utf-8') as file:
+        scenario_content = file.read()
+
 # JSON 파일 로드
 if json_file_path.exists():
     with open(json_file_path, 'r', encoding='utf-8') as file:
@@ -45,14 +80,14 @@ if json_file_path.exists():
 else:
     raise FileNotFoundError(f"JSON 파일을 찾을 수 없습니다: {json_file_path}")
 
-# 메뉴얼 텍스트 파일 로드
+# 시나리오 텍스트 파일 로드
 if scenario_file_path.exists():
     with open(scenario_file_path, 'r', encoding='utf-8') as file:
         scenario_content = file.read()
 else:
     raise FileNotFoundError(f"텍스트 파일을 찾을 수 없습니다: {scenario_file_path}")
 
-# 시나리오 텍스트 파일 로드
+# 메뉴얼 텍스트 파일 로드
 if manual_file_path.exists():
     with open(manual_file_path, 'r', encoding='utf-8') as file:
         manual_content = file.read()
@@ -80,12 +115,15 @@ User Manual:
 The scenario that the user must follow::
 {scenario}
 
+User input & AI response Log
+{history}
+
 Button information pressed by the user:
 {question}
 
 답변 (한국어로, 1줄만):
 """
-prompt = PromptTemplate(template=prompt_template, input_variables=["scenario", "context", "manual", "history","question"])
+prompt = PromptTemplate(template=prompt_template, input_variables=["context", "manual", "scenario", "history", "question"])
 
 qa_chain = prompt | llm
 
@@ -111,8 +149,16 @@ async def chat(message: Message):
     # 답변을 출력
     print('AI 답변 >> ' + response)
     with open('history.txt', 'a', encoding='utf-8') as file:
-        file.write(f'사용자 입력 >> {message.content}\n')
-        # file.write(f'AI 답변 >>  {response}\n\n')
+        file.write(f'User Input >> {message.content}\n')
+        file.write(f'AI Response >>  {response}\n\n')
     return {"response": response}
+
+# 시나리오 텍스트 확인용 라우트
+@app.get("/scenario")
+async def get_scenario():
+    with open('scenario.txt', 'r', encoding='utf-8') as file:
+        scenario = file.read()
+    return {"scenario": scenario}
+    
 # uvicorn main:app --reload
 # uvicorn main:app --reload --host 0.0.0.0 --port 8000
