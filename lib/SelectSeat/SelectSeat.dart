@@ -27,19 +27,23 @@ class _SelectseatState extends State<Selectseat> {
       alert = (globalAdult.value + globalMid.value + globalChild.value) == 0;
     });
   }
+
   void _updateSelectedSeats(int count) {
     setState(() {
       selectedSeatCount = count;
     });
   }
+
   void _handleLeftSeatsCalculated(int seats) {
-      leftSeats = seats; // leftSeats 값을 저장
+    leftSeats = seats; // leftSeats 값을 저장
   }
+
   @override
   Widget build(BuildContext context) {
     total = globalAdult.value + globalMid.value + globalChild.value;
-    globalFee.value = NumberFormat('#,###').format(
-                              globalAdult.value * 39300 + globalMid.value * 31400 + globalChild.value * 19700);
+    globalFee.value = NumberFormat('#,###').format(globalAdult.value * 39300 +
+        globalMid.value * 31400 +
+        globalChild.value * 19700);
     return Scaffold(
       appBar: const Headercomp(text: '티켓 수량과 좌석을 선택하세요.'),
       body: Row(
@@ -57,18 +61,23 @@ class _SelectseatState extends State<Selectseat> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: const TextSpan(children: [
-                        TextSpan(text: "원하시는 ", style: TextStyle(fontSize: 30, color: Colors.white)),
+                        TextSpan(
+                            text: "원하시는 ",
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.white)),
                         TextSpan(
                             text: "승차권수량을 +, -로 ",
                             style:
                                 TextStyle(fontSize: 30, color: primaryYellow)),
                         TextSpan(
-                            text: "조정하세요.", style: TextStyle(fontSize: 30, color: Colors.white)),
+                            text: "조정하세요.",
+                            style:
+                                TextStyle(fontSize: 30, color: Colors.white)),
                       ]),
                     ),
                   ),
                 ),
-                SelectComp(onCountChanged: _updateCounts,  leftSeats: leftSeats),
+                SelectComp(onCountChanged: _updateCounts, leftSeats: leftSeats),
                 Container(
                   width: double.infinity,
                   height: 5,
@@ -90,11 +99,10 @@ class _SelectseatState extends State<Selectseat> {
                     children: [
                       FinalResult(title: '총수량', data: total.toString()),
                       const SizedBox(width: 30),
-                      FinalResult(
-                          title: '총금액',
-                          data: globalFee.value),
+                      FinalResult(title: '총금액', data: globalFee.value),
                       const SizedBox(width: 60),
-                      OrangeButton(text: '선택완료',
+                      OrangeButton(
+                        text: '선택완료',
                         selectedSeatCount: selectedSeatCount,
                         maxSelectableSeats: total,
                       ),
@@ -106,6 +114,7 @@ class _SelectseatState extends State<Selectseat> {
           )
         ],
       ),
+      floatingActionButton: const CommonFloatingButton(),
       bottomNavigationBar: const BottomComp(),
     );
   }

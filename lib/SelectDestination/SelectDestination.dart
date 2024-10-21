@@ -38,14 +38,12 @@ class _SelectdestinationState extends State<Selectdestination> {
                   Container(
                     color: primaryPurple,
                     width: double.infinity,
-
                     child: Center(
                       child: LocationContainer(
                         onRegionSelected: _handleRegionSelected,
                       ),
                     ),
                   ),
-
                   Expanded(
                     child: Container(
                       color: Colors.white,
@@ -55,7 +53,6 @@ class _SelectdestinationState extends State<Selectdestination> {
                         child: LocationByWord(
                           selectedRegion: _selectedRegion,
                         ),
-
                       ),
                     ),
                   ),
@@ -65,6 +62,7 @@ class _SelectdestinationState extends State<Selectdestination> {
           ),
         ],
       ),
+      floatingActionButton: const CommonFloatingButton(),
       bottomNavigationBar: const BottomComp(),
     );
   }

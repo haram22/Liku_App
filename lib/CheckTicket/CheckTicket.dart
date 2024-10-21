@@ -34,7 +34,9 @@ class _CheckticketState extends State<Checkticket> {
                         textAlign: TextAlign.center,
                         text: const TextSpan(children: [
                           TextSpan(
-                              text: "티켓 내역 확인하기", style: TextStyle(fontSize: 40, color: Colors.white))
+                              text: "티켓 내역 확인하기",
+                              style:
+                                  TextStyle(fontSize: 40, color: Colors.white))
                         ]),
                       ),
                     ),
@@ -108,7 +110,9 @@ class _CheckticketState extends State<Checkticket> {
                       children: [
                         Expanded(
                             child: TicketResults(
-                                title: "매수", content: total.toString(), width: resultWidth)),
+                                title: "매수",
+                                content: total.toString(),
+                                width: resultWidth)),
                         SizedBox(width: 10),
                         Expanded(
                             child: TicketResults(
@@ -131,7 +135,9 @@ class _CheckticketState extends State<Checkticket> {
                       padding: EdgeInsets.only(top: 10.0, left: 40, right: 40),
                       child: Expanded(
                           child: TicketResults(
-                              title: "좌석", content: seatNotifier.value.join(", "), width: resultWidth))),
+                              title: "좌석",
+                              content: seatNotifier.value.join(", "),
+                              width: resultWidth))),
                   SizedBox(height: 20),
                   Container(
                       width: double.infinity,
@@ -149,6 +155,7 @@ class _CheckticketState extends State<Checkticket> {
           )
         ],
       ),
+      floatingActionButton: const CommonFloatingButton(),
       bottomNavigationBar: const BottomComp(),
     );
   }

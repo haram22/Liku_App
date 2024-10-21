@@ -126,9 +126,12 @@ class _SelectTimeState extends State<SelectTime> {
                                 onPressed: () {
                                   setState(() {
                                     select = scheduleIndex;
-                                    timeNotifier.value = schedules[scheduleIndex].time;
-                                    NetworkUtils.sendMessageToServer("버스시간 선택 화면에서 좌석 선택화면으로 넘어갑니다.");
-                                    Navigator.pushReplacementNamed(context, '/selectSeat');
+                                    timeNotifier.value =
+                                        schedules[scheduleIndex].time;
+                                    NetworkUtils.sendMessageToServer(
+                                        "버스시간 선택 화면에서 좌석 선택화면으로 넘어갑니다.");
+                                    Navigator.pushReplacementNamed(
+                                        context, '/selectSeat');
                                   });
                                 },
                                 child: const Text(
@@ -182,7 +185,7 @@ class _SelectTimeState extends State<SelectTime> {
                           page: currentPage,
                           totalItems: schedules.length,
                           itemsPerPage: itemsPerPage,
-                          onPageChanged: updatePage, 
+                          onPageChanged: updatePage,
                           pass: 1,
                         ),
                       )
@@ -194,6 +197,7 @@ class _SelectTimeState extends State<SelectTime> {
           ),
         ],
       ),
+      floatingActionButton: const CommonFloatingButton(),
       bottomNavigationBar: const BottomComp(),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liku/Components/Comp.dart';
 import 'package:liku/Theme/Colors.dart';
 import 'package:lottie/lottie.dart';
 import '../Components/TopBottomComp.dart';
@@ -30,7 +31,9 @@ class _PaymentPageState extends State<PaymentPage> {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: const TextSpan(children: [
-                        TextSpan(text: "카드 결제", style: TextStyle(fontSize: 40, color: Colors.white))
+                        TextSpan(
+                            text: "카드 결제",
+                            style: TextStyle(fontSize: 40, color: Colors.white))
                       ]),
                     ),
                   ),
@@ -102,6 +105,7 @@ class _PaymentPageState extends State<PaymentPage> {
           )
         ],
       ),
+      floatingActionButton: const CommonFloatingButton(),
       bottomNavigationBar: const BottomComp(),
     );
   }
