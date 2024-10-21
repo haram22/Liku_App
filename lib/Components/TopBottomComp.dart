@@ -34,7 +34,7 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    NetworkUtils.sendMessageToServer("사용자는 처음화면으로 가는 버튼을 눌렀습니다.");
+                    // NetworkUtils.sendMessageToServer("사용자는 처음화면으로 가는 버튼을 눌렀습니다.");
                     currentPageNotifier.value = 0;
                     destNotifier.value = "-";
                     timeNotifier.value = "-";

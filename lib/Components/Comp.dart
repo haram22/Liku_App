@@ -45,7 +45,7 @@ class OrangeButton extends StatelessWidget {
               globalInfo.value = _info;
               seatNotifier.value.sort();
               NetworkUtils.sendMessageToServer(
-                  "사용자는 좌석 선택 화면에서 결제 완료 버튼을 눌렀습니다.");
+                  "사용자는 좌석 선택 화면에서 $_info를 선택하고 결제 완료 버튼을 눌렀습니다.");
               Navigator.pushReplacementNamed(context, '/checkTicket');
             }
           : null;

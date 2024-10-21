@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NetworkUtils {
+  // 172.18.145.115
+  // http://127.0.0.1:8000/chat
+  // 'http://40.82.146.241:8000/chat'; 의진님 서버
   static const String _url = 'http://127.0.0.1:8000/chat'; // 서버의 URL
 
   static Future<void> sendMessageToServer(String message) async {
