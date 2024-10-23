@@ -62,7 +62,7 @@ class _SelectdestinationState extends State<Selectdestination> {
           ),
         ],
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      floatingActionButton: const CommonFloatingButton(screenName: "목적지 선택 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

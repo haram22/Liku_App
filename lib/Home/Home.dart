@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      floatingActionButton: const CommonFloatingButton(screenName: "처음 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

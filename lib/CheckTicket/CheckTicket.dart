@@ -155,7 +155,7 @@ class _CheckticketState extends State<Checkticket> {
           )
         ],
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      floatingActionButton: const CommonFloatingButton(screenName: "결제 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

@@ -114,7 +114,7 @@ class _SelectseatState extends State<Selectseat> {
           )
         ],
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      floatingActionButton: const CommonFloatingButton(screenName: "좌석 선택 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

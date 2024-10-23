@@ -197,7 +197,8 @@ class _SelectTimeState extends State<SelectTime> {
           ),
         ],
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      floatingActionButton:
+          const CommonFloatingButton(screenName: "버스 시간 선택 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

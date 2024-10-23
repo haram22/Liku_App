@@ -237,7 +237,9 @@ class TicketResults extends StatelessWidget {
 }
 
 class CommonFloatingButton extends StatefulWidget {
-  const CommonFloatingButton({Key? key}) : super(key: key);
+  final String screenName;
+  const CommonFloatingButton({Key? key, required this.screenName})
+      : super(key: key);
 
   @override
   State<CommonFloatingButton> createState() => _CommonFloatingButtonState();
@@ -272,7 +274,8 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer("여기서 무슨 버튼을 눌러야 하나요?");
+            NetworkUtils.sendMessageToServer(
+                "${widget.screenName} 여기서 무슨 버튼을 눌러야 하나요?");
             _animationController.reverse();
           },
         ),
@@ -296,7 +299,9 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer("잘 못 들었습니다. 다시한번 들려주세요.");
+            //NetworkUtils.sendMessageToServer("잘 못 들었습니다. 다시한번 들려주세요.");
+            NetworkUtils.sendMessageToServer(
+                "${widget.screenName} 화면인데, 잘 못 들었습니다. 다시한번 들려주세요.");
             _animationController.reverse();
           },
         ),

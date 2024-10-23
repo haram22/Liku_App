@@ -105,7 +105,7 @@ class _PaymentPageState extends State<PaymentPage> {
           )
         ],
       ),
-      floatingActionButton: const CommonFloatingButton(),
+      // floatingActionButton: const CommonFloatingButton(screenName: "끝 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }
