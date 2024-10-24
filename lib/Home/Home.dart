@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liku/Components/Comp.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Theme/Colors.dart';
@@ -12,12 +13,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
-    NetworkUtils.sendMessageToServer("The user is in inital screen. Now instruct the user on what they need to do. [Example] '안녕하세요. 키오스크 교육에 참여해 주셔서 감사합니다. 이번 해볼 미션은 {목적지}로 가는 {버스시간} 버스를 선택해 {인원}을 예매 하는 것입니다. 화면 오른쪽 보라색 버튼을 눌러 목적지 화면으로 이동하세요.' 이런 형태로 처음 안내하면 돼.");
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +106,8 @@ class _HomeState extends State<Home> {
                   child: ElevatedButton(
                     onPressed: () {
                       print("버튼이 눌렸습니다");
-                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.");
+                      NetworkUtils.sendMessageToServer(
+                          "사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.");
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryOrange,
@@ -141,7 +141,8 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      NetworkUtils.sendMessageToServer("사용자는 처음 화면에서 보라색 버튼을 눌렀습니다. 목적지 화면으로 이동합니다.");
+                      NetworkUtils.sendMessageToServer(
+                          "사용자는 처음 화면에서 보라색 버튼을 눌렀습니다. 목적지 화면으로 이동합니다.");
                       Navigator.pushReplacementNamed(context, '/selectDest');
                     },
                     style: ElevatedButton.styleFrom(
@@ -175,6 +176,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+      floatingActionButton: const CommonFloatingButton(screenName: "처음 화면"),
       bottomNavigationBar: const BottomComp(),
     );
   }

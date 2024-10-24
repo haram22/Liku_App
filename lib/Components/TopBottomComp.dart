@@ -34,7 +34,11 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    // NetworkUtils.sendMessageToServer("사용자는 처음화면으로 가는 버튼을 눌렀습니다.");
+                    if (text == "카드를 인식시켜주세요"){
+                      NetworkUtils.sendMessageToServer("RESTART");
+                    }else{
+                      NetworkUtils.sendMessageToServer("처음화면으로 이동합니다.");
+                    }
                     currentPageNotifier.value = 0;
                     destNotifier.value = "-";
                     timeNotifier.value = "-";
@@ -42,6 +46,9 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     globalMid.value = 0;
                     globalChild.value = 0;
                     globalFee.value = '';
+                    globalDest.value = '';
+                    globalTime.value = '';
+                    globalPerson.value = '';
                     seatNotifier.value = [];
                     Navigator.pushReplacementNamed(context, '/home');
                   },
