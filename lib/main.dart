@@ -5,6 +5,7 @@ import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
+import 'package:liku/utils/network_utils.dart';
 import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
 import 'Components/Location.dart';
@@ -18,10 +19,11 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    NetworkUtils.sendMessageToServer(
+    "The user is in inital screen. Now instruct the user on what they need to do. [Example] '안녕하세요. 키오스크 교육에 참여해 주셔서 감사합니다. 이번 해볼 미션은 {목적지}로 가는 {버스시간} 버스를 선택해 {인원}을 예매 하는 것입니다. 화면 오른쪽 보라색 버튼을 눌러 목적지 화면으로 이동하세요.' 이런 형태로 처음 안내하면 돼.");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

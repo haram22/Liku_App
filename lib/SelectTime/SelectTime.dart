@@ -128,6 +128,7 @@ class _SelectTimeState extends State<SelectTime> {
                                     select = scheduleIndex;
                                     timeNotifier.value =
                                         schedules[scheduleIndex].time;
+                                    globalTime.value = schedules[scheduleIndex].time;
                                     NetworkUtils.sendMessageToServer(
                                         "버스시간 선택 화면에서 ${schedules[scheduleIndex].time} 버스를 선택했습니다. 좌석 선택화면으로 넘어갑니다.");
                                     Navigator.pushReplacementNamed(

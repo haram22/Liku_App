@@ -143,6 +143,18 @@ with open('history.txt', 'w', encoding='utf-8') as file:
 # FastAPI 라우트 정의
 @app.post("/chat")
 async def chat(message: Message):
+    
+    # 만약 사용자의 입력이 "RESTART"라면 새로운 시나리오를 생성
+    if message.content == "RESTART":
+        scenario = generate_scenario()
+        print(f"생성된 시나리오:\n{scenario}")
+        with open('scenario.txt', 'r', encoding='utf-8') as file:
+            global scenario_content
+            scenario_content = file.read()
+        response = ask_question(message.content)
+        print(response)
+        return {"response": response}
+
     # 사용자 질문을 처리하고 답변 생성
     print('사용자 입력 >> ' + message.content)
     response = ask_question(message.content)

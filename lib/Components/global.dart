@@ -12,3 +12,6 @@ final ValueNotifier<String> globalFee = ValueNotifier<String>('');
 final ValueNotifier<String> globalInfo = ValueNotifier<String>('');
 final ValueNotifier<List> seatNotifier = ValueNotifier<List>([]);
 
+final ValueNotifier<String> globalDest = ValueNotifier<String>('');
+final ValueNotifier<String> globalTime = ValueNotifier<String>('');
+final ValueNotifier<String> globalPerson = ValueNotifier<String>('');

@@ -43,9 +43,10 @@ class OrangeButton extends StatelessWidget {
                 _info += '아동(${globalChild.value})';
               }
               globalInfo.value = _info;
+              globalPerson.value = _info;
               seatNotifier.value.sort();
               NetworkUtils.sendMessageToServer(
-                  "사용자는 좌석 선택 화면에서 $_info를 선택하고 결제 완료 버튼을 눌렀습니다.");
+                  "사용자는 좌석 선택 화면에서 $_info를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 넘어갑니다.");
               Navigator.pushReplacementNamed(context, '/checkTicket');
             }
           : null;
@@ -81,7 +82,7 @@ class OrangeButton extends StatelessWidget {
           ),
           onPressed: () {
             NetworkUtils.sendMessageToServer(
-                "사용자는 결제 화면에서 결제하기 버튼을 눌렀습니다. 그리고 끝화면으로 넘어갑니다.");
+                "사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 종합적으로 사용자는 ${globalDest.value}로 가는 ${globalTime.value} 버스를 선택해 ${globalPerson.value}을 예매했습니다. 시나리오와 비교해주세요. 끝화면으로 넘어갑니다.");
             Navigator.pushReplacementNamed(context, '/payment');
           },
           child: Text(
