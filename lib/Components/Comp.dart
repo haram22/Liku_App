@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,7 +44,7 @@ class OrangeButton extends StatelessWidget {
               globalPerson.value = _info;
               seatNotifier.value.sort();
               NetworkUtils.sendMessageToServer(
-                  "사용자는 좌석 선택 화면에서 $_info를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 넘어갑니다.");
+                  "사용자는 좌석 선택 화면에서 {인원} {$_info}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.");
               Navigator.pushReplacementNamed(context, '/checkTicket');
             }
           : null;
@@ -82,7 +80,7 @@ class OrangeButton extends StatelessWidget {
           ),
           onPressed: () {
             NetworkUtils.sendMessageToServer(
-                "사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 종합적으로 사용자는 ${globalDest.value}로 가는 ${globalTime.value} 버스를 선택해 ${globalPerson.value}을 예매했습니다. 시나리오와 비교해주세요. 끝화면으로 넘어갑니다.");
+                "사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 지금까지 사용자는 [${destNotifier.value}]로 가는 [${timeNotifier.value}]시간 버스를 선택하고, 인원은 [${globalInfo.value}]를 선택했습니다. 그리고 끝화면으로 넘어갑니다.");
             Navigator.pushReplacementNamed(context, '/payment');
           },
           child: Text(
@@ -250,6 +248,7 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
     with SingleTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _animationController;
+
   @override
   void initState() {
     _animationController = AnimationController(
@@ -262,12 +261,45 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
     super.initState();
   }
 
+  void _showInputDialog() {
+    TextEditingController _textController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("질문 입력"),
+          content: TextField(
+            controller: _textController,
+            decoration: InputDecoration(hintText: "여기에 질문을 입력하세요"),
+          ),
+          actions: [
+            TextButton(
+              child: Text("취소"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("전송"),
+              onPressed: () {
+                NetworkUtils.sendMessageToServer(
+                    "${widget.screenName} 화면에서 사용자가 직접 입력한 질문: ${_textController.text}");
+                Navigator.of(context).pop();
+                _animationController.reverse();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     FloatingActionButtonLocation.endDocked;
     return FloatingActionBubble(
       items: <Bubble>[
-        // Floating action menu item
         Bubble(
           title: "여기서 무슨 버튼을 눌러야 하나요?",
           iconColor: Colors.white,
@@ -280,7 +312,6 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
             _animationController.reverse();
           },
         ),
-        // Floating action menu item
         Bubble(
           title: "잘못 눌렀습니다. 어떻게 되돌아 가나요?",
           iconColor: Colors.white,
@@ -292,7 +323,6 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
             _animationController.reverse();
           },
         ),
-        //Floating action menu item
         Bubble(
           title: "잘 못 들었습니다. 다시한번 들려주세요.",
           iconColor: Colors.white,
@@ -300,26 +330,27 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            //NetworkUtils.sendMessageToServer("잘 못 들었습니다. 다시한번 들려주세요.");
             NetworkUtils.sendMessageToServer(
                 "${widget.screenName} 화면인데, 잘 못 들었습니다. 다시한번 들려주세요.");
             _animationController.reverse();
           },
         ),
+        Bubble(
+          title: "직접 질문 입력하기",
+          iconColor: Colors.white,
+          bubbleColor: Colors.blue,
+          icon: Icons.edit,
+          titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+          onPress: () {
+            _showInputDialog();
+          },
+        ),
       ],
-
-      // animation controller
       animation: _animation,
-
-      // On pressed change animation state
       onPress: () => _animationController.isCompleted
           ? _animationController.reverse()
           : _animationController.forward(),
-
-      // Floating Action button Icon color
       iconColor: Colors.white,
-
-      // Flaoting Action button Icon
       iconData: Icons.question_mark_rounded,
       backGroundColor: Colors.blue,
     );
