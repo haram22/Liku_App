@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NetworkUtils {
-  //static const String _url = 'http://20.41.118.19:8000/chat'; // Azure 서버
-  static const String _url = 'http://127.0.0.1:8000/chat'; //  Local 서버
+  static const String _url = 'http://20.41.118.19:8000/chat'; // Azure 서버
+  //static const String _url = 'http://127.0.0.1:8000/chat'; //  Local 서버
   //static const String _url = 'http://172.18.135.56:8000/chat'; // 무선LAN 서버
 
   static Future<void> sendMessageToServer(String message) async {

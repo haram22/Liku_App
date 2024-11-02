@@ -46,6 +46,9 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     globalMid.value = 0;
                     globalChild.value = 0;
                     globalFee.value = '';
+                    globalDest.value = '';
+                    globalTime.value = '';
+                    globalPerson.value = '';
                     seatNotifier.value = [];
                     Navigator.pushReplacementNamed(context, '/home');
                   },

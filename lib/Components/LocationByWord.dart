@@ -761,6 +761,7 @@ class _LocationByWordState extends State<LocationByWord> {
                         setState(() {
                           dest = items[scheduleIndex];
                           destNotifier.value = dest;
+                          globalDest.value = dest;
                           NetworkUtils.sendMessageToServer(
                               "사용자는 {목적지} 선택 화면에서 {$dest}을 선택했습니다. [버스 시간 선택 화면]으로 넘어갑니다.");
                           Navigator.pushReplacementNamed(context, '/selectTime',

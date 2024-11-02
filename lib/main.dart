@@ -6,6 +6,7 @@ import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
 import 'package:liku/utils/network_utils.dart';
+import 'package:liku/utils/network_utils.dart';
 import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
 import 'Components/Location.dart';
@@ -19,7 +20,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

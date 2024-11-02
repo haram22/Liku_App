@@ -41,6 +41,7 @@ class OrangeButton extends StatelessWidget {
                 _info += '아동(${globalChild.value})';
               }
               globalInfo.value = _info;
+              globalPerson.value = _info;
               seatNotifier.value.sort();
               NetworkUtils.sendMessageToServer(
                   "사용자는 좌석 선택 화면에서 {인원} {$_info}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.");
