@@ -34,7 +34,11 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {
-                    // NetworkUtils.sendMessageToServer("사용자는 처음화면으로 가는 버튼을 눌렀습니다.");
+                    if (text == "카드를 인식시켜주세요") {
+                      NetworkUtils.sendMessageToServer("RESTART");
+                    } else {
+                      NetworkUtils.sendMessageToServer("처음화면으로 이동합니다");
+                    }
                     currentPageNotifier.value = 0;
                     destNotifier.value = "-";
                     timeNotifier.value = "-";
@@ -140,7 +144,7 @@ class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.13,
+                width: MediaQuery.of(context).size.width * 0.15,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: primaryRed,
@@ -194,7 +198,6 @@ class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
             // 가운데 구역
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              height: 100,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -220,7 +223,7 @@ class HomeHeaderComp extends StatelessWidget implements PreferredSizeWidget {
                 child: DefaultTextStyle(
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold),
                   child: Column(
                     children: [
@@ -276,4 +279,3 @@ class BottomComp extends StatelessWidget {
     );
   }
 }
-
