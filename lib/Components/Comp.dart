@@ -44,7 +44,7 @@ class OrangeButton extends StatelessWidget {
               globalPerson.value = _info;
               seatNotifier.value.sort();
               NetworkUtils.sendMessageToServer(
-                  "사용자는 좌석 선택 화면에서 {인원} {$_info}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.");
+                  "*사용자는 좌석 선택 화면에서 {인원} {$_info}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.");
               Navigator.pushReplacementNamed(context, '/checkTicket');
             }
           : null;
@@ -80,7 +80,7 @@ class OrangeButton extends StatelessWidget {
           ),
           onPressed: () {
             NetworkUtils.sendMessageToServer(
-                "사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 지금까지 사용자는 [${destNotifier.value}]로 가는 [${timeNotifier.value}]시간 버스를 선택하고, 인원은 [${globalInfo.value}]를 선택했습니다. 그리고 끝화면으로 넘어갑니다.");
+                "*사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 지금까지 사용자는 [${destNotifier.value}]로 가는 [${timeNotifier.value}]시간 버스를 선택하고, 인원은 [${globalInfo.value}]를 선택했습니다. 그리고 끝화면으로 넘어갑니다.");
             Navigator.pushReplacementNamed(context, '/payment');
           },
           child: Text(
@@ -301,14 +301,13 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
     return FloatingActionBubble(
       items: <Bubble>[
         Bubble(
-          title: "여기서 무슨 버튼을 눌러야 하나요?",
+          title: "현재 미션이 뭔가요?",
           iconColor: Colors.white,
           bubbleColor: Colors.blue,
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer(
-                "${widget.screenName} 여기서 무슨 버튼을 눌러야 하나요?");
+            NetworkUtils.sendMessageToServer("현재 미션이 뭔가요?");
             _animationController.reverse();
           },
         ),

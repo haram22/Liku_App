@@ -100,7 +100,6 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      print("버튼이 눌렸습니다");
                       NetworkUtils.sendMessageToServer(
                           "사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.");
                     },
