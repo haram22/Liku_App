@@ -222,7 +222,7 @@ async def chat(message: Message):
         bus_time = re.search(r'버스시간 = "(.*?)"', scenario_content).group(1)
         people = re.search(r'인원 = "(.*?)"', scenario_content).group(1)
         # Format the response
-        response = f"안녕하세요. 리쿠와 함께하는 키오스크 교육에 오신 것을 환영합니다. 오늘 해볼 미션은 [{destination}]로 가는 [{bus_time}] 버스를 선택하고 [{people}]을 예매하는 것입니다. 화면 오른쪽 보라색 버튼을 눌러 목적지 선택 화면으로 이동해볼까요?"
+        response = f"안녕하세요. 리쿠와 함께하는 키오스크 교육에 오신 것을 환영합니다. 오늘 해볼 미션은 [{destination}] 지역으로 가는 [{bus_time}] 버스를 선택하고 [{people}]을 예매하는 것입니다. 화면 오른쪽 보라색 버튼을 눌러 목적지 선택 화면으로 이동해볼까요?"
         clean_history()  # Clear history if needed
         print('사용자 입력 >> ' + message.content)
         print('AI 답변 >> ' + response)
@@ -246,7 +246,7 @@ async def chat(message: Message):
     
     response = ask_question(message.content)
     # 50% 확률로 칭찬 추가
-    if random.random() < 0.5:
+    if random.random() < 0.5 and message.content[0] == '*':
         response = compliment_generate(response)
 
     print('사용자 입력 >> ' + message.content)

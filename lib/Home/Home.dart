@@ -3,6 +3,7 @@ import 'package:liku/Components/Comp.dart';
 import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Theme/Colors.dart';
+
 import 'package:liku/utils/network_utils.dart';
 
 class Home extends StatefulWidget {
@@ -13,8 +14,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _messageHandled = false;
+
   @override
   Widget build(BuildContext context) {
+    String? message = ModalRoute.of(context)?.settings.arguments as String?;
+    if (message != null && !_messageHandled) {
+      NetworkUtils.sendMessageAndShowResponse(context, message);
+      _messageHandled = true; // 메시지를 처리했음을 표시
+    }
     return Scaffold(
       appBar: const HomeHeaderComp(),
       body: Center(
@@ -100,8 +108,8 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      NetworkUtils.sendMessageToServer(
-                          "사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.");
+                      String message = "사용자는 처음 화면에서 주황색 버튼을 눌렀습니다.";
+                      NetworkUtils.sendMessageAndShowResponse(context, message);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryOrange,
@@ -135,8 +143,6 @@ class _HomeState extends State<Home> {
                   height: 200,
                   child: ElevatedButton(
                     onPressed: () {
-                      NetworkUtils.sendMessageToServer(
-                          "사용자는 처음 화면에서 보라색 버튼을 눌렀습니다. 목적지 화면으로 이동합니다.");
                       Navigator.pushReplacementNamed(context, '/selectDest');
                     },
                     style: ElevatedButton.styleFrom(
@@ -166,7 +172,7 @@ class _HomeState extends State<Home> {
                   ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),

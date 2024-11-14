@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liku/Components/global.dart';
+import 'package:liku/utils/network_utils.dart';
 import '../Components/Comp.dart';
 import '../Components/TopBottomComp.dart';
 import '../Theme/Colors.dart';
@@ -14,6 +15,11 @@ class Checkticket extends StatefulWidget {
 class _CheckticketState extends State<Checkticket> {
   final double resultWidth = 140;
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      String message =
+          "*사용자는 좌석 선택 화면에서 {인원} {${globalInfo.value}}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.";
+      NetworkUtils.sendMessageAndShowResponse(context, message);
+    });
     int total = globalAdult.value + globalMid.value + globalChild.value;
     return Scaffold(
       appBar: const Headercomp(text: '선택 내역을 확인하세요.'),

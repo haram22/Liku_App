@@ -143,7 +143,7 @@ def clean_history():
 
 def compliment_generate(response):
     # 칭찬 생성 프롬프트 설정
-    compliment_prompt = PromptTemplate(template="응답 내용: {response}\n위의 응답내용의 앞이나 뒤에 응답 내용과 어울리는 칭찬이나 격려를 한마디만 더해주세요. 시나리오와 다른 선택을 했다면 아쉽습니다. 이런멘트로 짧게 해줘. 단, 응답 내용을 전부 그대로 적어줘야 합니다. Example. 괜찮아요. 다시한번 생각해볼까요? 잘하고 있습니다!, 당신의 도전이 정말 멋집니다. etc",
+    compliment_prompt = PromptTemplate(template="{response}\n위의 응답내용의 앞이나 뒤에 응답 내용과 어울리는 칭찬이나 격려를 한마디만 더해주세요. 시나리오와 다른 선택을 했다면 아쉽습니다. 이런멘트로 짧게 해줘. 단, 응답 내용을 전부 그대로 적어줘야 합니다. Example. 괜찮아요. 다시한번 생각해볼까요? 잘하고 있습니다! etc",
     input_variables=["response"]
     ).format(response=response)
 
@@ -160,6 +160,9 @@ def compliment_generate(response):
 async def chat(message: Message):
     global scenario_content
     if message.content == "사용자가 앱을 실행했습니다.":
+        scenario = generate_scenario()
+        with open('scenario.txt', 'r', encoding='utf-8') as file:
+            scenario_content = file.read()
         # Extract values for 목적지, 버스시간, 인원
         destination = re.search(r'목적지 = "(.*?)"', scenario_content).group(1)
         bus_time = re.search(r'버스시간 = "(.*?)"', scenario_content).group(1)
@@ -172,7 +175,7 @@ async def chat(message: Message):
         with open('history.txt', 'a', encoding='utf-8') as file:
             file.write(f'User Input >> {message.content}\n')
             file.write(f'AI Response >>  {response}\n\n')
-        return {"response": response}
+        return response
         
     if message.content == "RESTART":
         scenario = generate_scenario()
@@ -183,7 +186,7 @@ async def chat(message: Message):
         response = ask_question(message.content)
         print(response)
         clean_history()
-        return {"response" : response}
+        return response
     
     response = ask_question(message.content)
     # 50% 확률로 칭찬 추가
@@ -197,7 +200,7 @@ async def chat(message: Message):
         file.write(f'AI Response >>  {response}\n\n')
     # 답변을 출력
 
-    return {"response": response}
+    return response
 
 # 시나리오 텍스트 확인용 라우트
 @app.get("/scenario")

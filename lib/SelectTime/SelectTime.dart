@@ -19,6 +19,7 @@ class _SelectTimeState extends State<SelectTime> {
   int select = -2;
   int currentPage = 0;
   final int itemsPerPage = 5;
+  bool overlayShown = false;
 
   void updatePage(int newPage) {
     setState(() {
@@ -28,6 +29,17 @@ class _SelectTimeState extends State<SelectTime> {
 
   @override
   Widget build(BuildContext context) {
+    if (!overlayShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        String message =
+            "*사용자는 {목적지} 선택 화면에서 {${destNotifier.value}}을 선택했습니다. [버스 시간 선택 화면]으로 넘어갑니다.";
+        NetworkUtils.sendMessageAndShowResponse(context, message);
+        setState(() {
+          overlayShown = true; // 오버레이가 한 번 표시된 후 플래그를 true로 설정
+        });
+      });
+    }
+
     return Scaffold(
       appBar: const Headercomp(text: '배차를 선택하세요.'),
       body: Row(
@@ -130,8 +142,6 @@ class _SelectTimeState extends State<SelectTime> {
                                         schedules[scheduleIndex].time;
                                     globalTime.value =
                                         schedules[scheduleIndex].time;
-                                    NetworkUtils.sendMessageToServer(
-                                        "*{버스시간} 선택 화면에서 {${schedules[scheduleIndex].time}} 버스를 선택했습니다. 좌석 선택화면으로 넘어갑니다.");
                                     Navigator.pushReplacementNamed(
                                         context, '/selectSeat');
                                   });

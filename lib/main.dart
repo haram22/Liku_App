@@ -1,12 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:liku/Components/TopBottomComp.dart';
-import 'package:liku/Components/SelectComp.dart';
 import 'package:liku/SelectSeat/SelectSeat.dart';
 import 'package:liku/SelectTime/SelectTime.dart';
-import 'package:liku/utils/network_utils.dart';
-import 'package:liku/utils/network_utils.dart';
 import 'CheckTicket/CheckTicket.dart';
 import 'Components/Comp.dart';
 import 'Components/Location.dart';
@@ -15,6 +11,8 @@ import 'Payment/Payment.dart';
 import 'SelectDestination/SelectDestination.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   runApp(const MyApp());
 }
 
@@ -23,7 +21,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    NetworkUtils.sendMessageToServer("사용자가 앱을 실행했습니다.");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
