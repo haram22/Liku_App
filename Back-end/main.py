@@ -66,7 +66,7 @@ def generate_scenario():
 @app.on_event("startup")
 def create_scenario_on_startup():
     scenario = generate_scenario()
-    print(f"생성된 시나리오:\n{scenario}")
+    print("\n서버가 실행되었습니다.\n")
     global scenario_content
     with open('scenario.txt', 'r', encoding='utf-8') as file:
         scenario_content = file.read()

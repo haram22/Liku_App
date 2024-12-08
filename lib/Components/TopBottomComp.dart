@@ -114,7 +114,7 @@ class Headercomp extends StatelessWidget implements PreferredSizeWidget {
                         snapshot.data ?? text, // 불러온 텍스트가 있으면 표시, 없으면 기본 text
                         style: TextStyle(
                           color: primaryYellow,
-                          fontSize: 30,
+                          fontSize: 25,
                         ),
                         textAlign: TextAlign.center, // 텍스트 가로 중앙 정렬
                       );

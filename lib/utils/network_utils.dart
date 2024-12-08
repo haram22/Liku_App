@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 class NetworkUtils {
   //static const String _url = 'http://20.41.118.19:8000'; // Azure 서버
-  //static const String _url = 'http://127.0.0.1:8000'; //  Local 서버
-  static const String _url = 'http://172.18.135.56:8000'; // 무선LAN 서버
+  static const String _url = 'http://127.0.0.1:8000'; //  Local 서버
+  //static const String _url = 'http://192.168.0.49:8000'; // 무선LAN 서버
 
   static OverlayEntry? _currentOverlayEntry;
   static String _currentText = "";
