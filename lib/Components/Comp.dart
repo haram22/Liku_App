@@ -43,8 +43,6 @@ class OrangeButton extends StatelessWidget {
               globalInfo.value = _info;
               globalPerson.value = _info;
               seatNotifier.value.sort();
-              NetworkUtils.sendMessageToServer(
-                  "*사용자는 좌석 선택 화면에서 {인원} {$_info}를 선택하고 [선택 완료] 버튼을 눌렀습니다. 결제 화면으로 이동합니다.");
               Navigator.pushReplacementNamed(context, '/checkTicket');
             }
           : null;
@@ -79,8 +77,6 @@ class OrangeButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            NetworkUtils.sendMessageToServer(
-                "*사용자는 결제 화면에서 [카드결제] 버튼을 눌렀습니다. 지금까지 사용자는 [${destNotifier.value}]로 가는 [${timeNotifier.value}]시간 버스를 선택하고, 인원은 [${globalInfo.value}]를 선택했습니다. 그리고 끝화면으로 넘어갑니다.");
             Navigator.pushReplacementNamed(context, '/payment');
           },
           child: Text(
@@ -103,10 +99,11 @@ class ShowInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height, // 화면 전체 높이 사용
       color: primaryPurple,
       child: Padding(
         padding: const EdgeInsets.all(2.0),
-        child: Column(
+        child: ListView(
           children: [
             InfoContainer(title: "출발터미널", content: "동서울", color: primaryBlack),
             SizedBox(height: 2),
@@ -119,7 +116,7 @@ class ShowInfo extends StatelessWidget {
                 color: subPurple),
             SizedBox(height: 2),
             InfoContainer(
-                title: "출발시간선택", content: timeNotifier.value, color: subPurple)
+                title: "출발시간선택", content: timeNotifier.value, color: subPurple),
           ],
         ),
       ),
@@ -141,7 +138,7 @@ class InfoContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.17,
+      height: MediaQuery.of(context).size.height * 0.2,
       color: Colors.white,
       child: Column(
         children: [
@@ -301,13 +298,36 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
     return FloatingActionBubble(
       items: <Bubble>[
         Bubble(
+          title: "시작/재시작 버튼",
+          iconColor: Colors.white,
+          bubbleColor: Colors.red,
+          icon: Icons.power_settings_new,
+          titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+          onPress: () {
+            currentPageNotifier.value = 0;
+            destNotifier.value = "-";
+            timeNotifier.value = "-";
+            globalAdult.value = 0;
+            globalMid.value = 0;
+            globalChild.value = 0;
+            globalFee.value = '';
+            globalDest.value = '';
+            globalTime.value = '';
+            globalPerson.value = '';
+            seatNotifier.value = [];
+            Navigator.pushReplacementNamed(context, '/home',
+                arguments: "사용자가 앱을 실행했습니다.");
+            _animationController.reverse();
+          },
+        ),
+        Bubble(
           title: "현재 미션이 뭔가요?",
           iconColor: Colors.white,
           bubbleColor: Colors.blue,
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer("현재 미션이 뭔가요?");
+            NetworkUtils.sendMessageAndShowResponse(context, "현재 미션이 뭔가요?");
             _animationController.reverse();
           },
         ),
@@ -318,7 +338,8 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer("잘못 눌렀습니다. 어떻게 되돌아 가나요?");
+            NetworkUtils.sendMessageAndShowResponse(
+                context, "잘못 눌렀습니다. 어떻게 되돌아 가나요?");
             _animationController.reverse();
           },
         ),
@@ -329,8 +350,8 @@ class _CommonFloatingButtonState extends State<CommonFloatingButton>
           icon: Icons.question_answer,
           titleStyle: TextStyle(fontSize: 16, color: Colors.white),
           onPress: () {
-            NetworkUtils.sendMessageToServer(
-                "${widget.screenName} 화면인데, 잘 못 들었습니다. 다시한번 들려주세요.");
+            NetworkUtils.sendMessageAndShowResponse(
+                context, "${widget.screenName} 화면인데, 잘 못 들었습니다. 다시한번 들려주세요.");
             _animationController.reverse();
           },
         ),

@@ -6,6 +6,7 @@ import 'package:liku/Components/TopBottomComp.dart';
 import 'package:liku/Components/global.dart';
 import 'package:liku/SelectSeat/Seat.dart';
 import 'package:liku/Theme/Colors.dart';
+import 'package:liku/utils/network_utils.dart';
 
 class Selectseat extends StatefulWidget {
   const Selectseat({super.key});
@@ -19,6 +20,7 @@ class _SelectseatState extends State<Selectseat> {
   int selectedSeatCount = 0;
   bool alert = true;
   int leftSeats = 0;
+  bool overlayShown = false;
   void _updateCounts(int newAdult, int newMid, int newChild) {
     setState(() {
       globalAdult.value += newAdult;
@@ -40,6 +42,17 @@ class _SelectseatState extends State<Selectseat> {
 
   @override
   Widget build(BuildContext context) {
+// 화면이 처음 렌더링될 때만 오버레이를 한 번만 호출
+    if (!overlayShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        String message =
+            "*{버스시간} 선택 화면에서 {${globalTime.value}} 버스를 선택했습니다. 좌석 선택화면으로 넘어갑니다.";
+        NetworkUtils.sendMessageAndShowResponse(context, message);
+        setState(() {
+          overlayShown = true; // 오버레이가 한 번 표시된 후 플래그를 true로 설정
+        });
+      });
+    }
     total = globalAdult.value + globalMid.value + globalChild.value;
     globalFee.value = NumberFormat('#,###').format(globalAdult.value * 39300 +
         globalMid.value * 31400 +

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liku/Components/global.dart';
-import 'package:liku/utils/network_utils.dart';
 import '../Theme/Colors.dart';
-
 
 class LocationContainer extends StatefulWidget {
   final ValueChanged<String> onRegionSelected;
@@ -77,9 +75,8 @@ class _LocationContainerState extends State<LocationContainer> {
                   child: Center(
                     child: Text(
                       region,
-
-                      style: const TextStyle(fontSize: 16.0, color: Colors.white),
-
+                      style:
+                          const TextStyle(fontSize: 16.0, color: Colors.white),
                     ),
                   ),
                 ),
